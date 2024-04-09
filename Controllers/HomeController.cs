@@ -17,6 +17,13 @@ namespace INTEXII.Controllers {
             return View(data);
         }
 
+        public IActionResult Shop() {
+            var data = _repo.Products.ToList();
+            return View(data); 
+        }
+
+        public IActionResult AboutUs() => View();
+
         public IActionResult Privacy() {
             return View();
         }

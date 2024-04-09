@@ -9,11 +9,11 @@ public partial class Product
 
     public string Name { get; set; } = null!;
 
-    public decimal Year { get; set; }
+    public int Year { get; set; }
 
-    public decimal NumParts { get; set; }
+    public int NumParts { get; set; }
 
-    public decimal Price { get; set; }
+    public int Price { get; set; }
 
     public string? ImgLink { get; set; }
 

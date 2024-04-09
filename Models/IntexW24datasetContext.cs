@@ -31,19 +31,17 @@ public partial class IntexW24datasetContext : DbContext
     {
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasNoKey();
-
             entity.HasIndex(e => e.CustomerId, "IX_Customers_customer_ID").IsUnique();
 
-            entity.Property(e => e.Age).HasColumnName("age");
+            entity.Property(e => e.CustomerId).HasColumnName("customer_ID");
+            entity.Property(e => e.Age)
+                .HasColumnType("INTEGER")
+                .HasColumnName("age");
             entity.Property(e => e.BirthDate).HasColumnName("birth_date");
             entity.Property(e => e.CountryOfResidence).HasColumnName("country_of_residence");
-            entity.Property(e => e.CustomerId).HasColumnName("customer_ID");
             entity.Property(e => e.FirstName).HasColumnName("first_name");
             entity.Property(e => e.Gender).HasColumnName("gender");
-            entity.Property(e => e.LastName)
-                .HasColumnType("NUMERIC")
-                .HasColumnName("last_name");
+            entity.Property(e => e.LastName).HasColumnName("last_name");
             entity.Property(e => e.Username).HasColumnName("username");
         });
 

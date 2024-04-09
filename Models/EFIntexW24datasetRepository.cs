@@ -1,5 +1,5 @@
 ﻿namespace INTEXII.Models {
-    public class EFIntexW24datasetRepository : IIntexW24datasetRepository {
+   public class EFIntexW24datasetRepository : IIntexW24datasetRepository {
         private IntexW24datasetContext _repo;
 
         // Constructor
