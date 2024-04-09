@@ -54,6 +54,13 @@ builder.Services.Configure<IdentityOptions>(options => {
 // Add support for razor pages
 builder.Services.AddRazorPages();
 
+// Session memory, a.k.a. cookies. Using sessions for the cart
+builder.Services.AddDistributedMemoryCache(); // stores cached data in memory across the application instances
+builder.Services.AddSession();
+
+builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // required to access the current session in the SessionCart class
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -68,7 +75,10 @@ else {
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseCookiePolicy(); // Also added for cookie notification
+
+app.UseSession(); // Use the session that we set up above
 
 app.UseRouting();
 
@@ -78,6 +88,14 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+/*
+ // These have to be in our preferred order
+app.MapControllerRoute("pageNumAndType", "{prodCategory}/{pageNum}", new { Controller = "Home", action = "Index" });
+app.MapControllerRoute("pagination", "{pageNum}", new { Controller = "Home", action = "Index", pageNum = 1 });
+app.MapControllerRoute("projectType", "{prodCategory}", new { Controller = "Home", action = "Index", pageNum = 1 });
+app.MapDefaultControllerRoute();
+ */
 
 // Route Razor Pages
 app.MapRazorPages();
