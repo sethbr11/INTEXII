@@ -1,4 +1,5 @@
 using INTEXII.Data;
+using INTEXII.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     //options.UseSqlServer(connectionString));
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddDbContext<IntexW24datasetContext>(options => {
+    options.UseSqlite(builder.Configuration["ConnectionStrings:ShoppingConnection"]);
+});
+
+builder.Services.AddScoped<IIntexW24datasetRepository, EFIntexW24datasetRepository>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();

@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\qrcode\" />
-    <Folder Include="wwwroot\scss\" />
   </ItemGroup>
 
 </Project>

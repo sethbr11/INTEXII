@@ -4,14 +4,17 @@ using System.Diagnostics;
 
 namespace INTEXII.Controllers {
     public class HomeController : Controller {
-        private readonly ILogger<HomeController> _logger;
+        private IIntexW24datasetRepository _repo;
 
-        public HomeController(ILogger<HomeController> logger) {
-            _logger = logger;
-        }
+        // Constructor
+        public HomeController(IIntexW24datasetRepository temp) => _repo = temp;
 
         public IActionResult Index() {
-            return View();
+            var data = Tuple.Create(_repo.Customers.ToList(), 
+                                    _repo.LineItems.ToList(),
+                                    _repo.Orders.ToList(),
+                                    _repo.Products.ToList());
+            return View(data);
         }
 
         public IActionResult Privacy() {
