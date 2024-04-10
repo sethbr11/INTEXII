@@ -102,10 +102,10 @@ app.UseAuthorization();
 app.Use(async (context, next) => {
     context.Response.Headers.Add("Content-Security-Policy",
         "default-src 'self' http://localhost:53172 wss://localhost:44346 ws://localhost:53172/;" +
-        "script-src 'self' ;" +
+        "script-src 'self' 'unsafe-inline';" + // TRY NOT TO USE unsafe-inline IF YOU CAN HELP IT!
         "style-src 'self' 'unsafe-inline'; " + // TRY NOT TO USE unsafe-inline IF YOU CAN HELP IT!
         "font-src 'self'; " +
-        "img-src 'self' http://www.w3.org https://m.media-amazon.com/ https://www.lego.com/ https://images.brickset.com/; " +
+        "img-src 'self' http://www.w3.org https://m.media-amazon.com/ https://www.lego.com/ https://images.brickset.com/ data:; " +
         "frame-src 'self';");
 
     await next();
