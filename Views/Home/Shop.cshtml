@@ -17,7 +17,17 @@
         <vc:prod-colors />
     </div>
     <div class="col">
-        <!--Buttons to change the number of results per page here-->
+        <!-- Dropdown menu for changing the number of results per page -->
+        @using (Html.BeginForm("SetResultsPerPage", "Home", FormMethod.Post))
+        {
+            <label for="resultsPerPage">Results per page:</label>
+            <select id="resultsPerPage" name="resultsPerPage">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+            </select>
+            <button type="submit">Apply</button>
+        }
     </div>
 </div>
 
