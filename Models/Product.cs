@@ -24,4 +24,28 @@ public partial class Product
     public string? Description { get; set; }
 
     public string? Category { get; set; }
+
+    public string? PublicCategory { get; set; }
+
+    public int? Recommendation1 { get; set; }
+
+    public double? Similarity1 { get; set; }
+
+    public int? Recommendation2 { get; set; }
+
+    public double? Similarity2 { get; set; }
+
+    public int? Recommendation3 { get; set; }
+
+    public double? Similarity3 { get; set; }
+
+    public int? Recommendation4 { get; set; }
+
+    public double? Similarity4 { get; set; }
+
+    public int? Recommendation5 { get; set; }
+
+    public double? Similarity5 { get; set; }
+
+    public double? PopularityRank { get; set; }
 }

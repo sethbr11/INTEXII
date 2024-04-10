@@ -6,7 +6,14 @@
 
 @model ProductsListViewModel
 
-<h1>Shop</h1>
+<div class="row">
+    <div class="col-7">
+        <h1>Shop</h1>
+    </div>
+    <div class="col">
+        <vc:prod-categories />
+    </div>
+</div>
 
 
 @foreach (Product p in Model.Products) {
