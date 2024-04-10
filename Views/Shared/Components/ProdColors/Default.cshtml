@@ -3,15 +3,16 @@
 
 @model IEnumerable<string>
 
-<!--FIX THIS FOR IF YOU ARE TRYING TO SELECT FROM ANOTHER CATEGORY PAGE-->
-<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value + '/1');">
+<select onchange="window.location = this.options[this.selectedIndex].value;">
     <option value="">Color</option> @*Default value, nothing happens when you click it*@
     @foreach (string cl in Model ?? Enumerable.Empty<string>()) {
-        @if (cl == ViewBag.SelectedProdColor) {
-            <option selected>@cl</option>
+        var prodCategory = ViewBag.CurrentProdCategory ?? null; // If it's null, it will not filter by category
+        var url = Url.Action("Shop", "Home", new { prodCategory, prodColor = cl, pageNum = 1 });
+        @if (cl == ViewBag.CurrentProdColor) {
+            <option selected value="@url">@cl</option>
         }
         else {
-            <option value="@cl">@cl</option>
+            <option value="@url">@cl</option>
         }
     }
 </select>

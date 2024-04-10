@@ -26,12 +26,6 @@ namespace INTEXII.Controllers {
                 Products = _repo.Products
                     .Where(x => x.PublicCategory == prodCategory || prodCategory == null)
                     .Where(x => x.PrimaryColor == prodColor || prodColor == null)
-                    // GET FILTERING BY COLOR AS WELL
-                    //.Where(x => 
-                        //(x.PublicCategory == prodCategory && x.PrimaryColor == prodColor) ||
-                        //(x.PublicCategory == prodCategory && x.PrimaryColor == null) ||
-                        //(x.PublicCategory == null && x.PrimaryColor == prodColor) ||
-                        //(prodCategory == null && prodColor == null))
                     .OrderByDescending(x => x.PopularityRank) // Sort by popularity descending
                     .ThenBy(x => x.Price) // Then sort by price ascending (if applicable)
                     .Skip((pageNum - 1) * pageSize)
