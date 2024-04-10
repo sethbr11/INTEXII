@@ -4,3 +4,11 @@
 @{
 }
 
+@model ProductsListViewModel
+
+<h1>Shop</h1>
+
+
+@foreach (Product p in Model.Products) {
+    <partial name="ProductSummary" model="p" />
+}
