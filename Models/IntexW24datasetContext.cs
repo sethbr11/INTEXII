@@ -71,7 +71,12 @@ public partial class IntexW24datasetContext : DbContext
             entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.DayOfWeek).HasColumnName("day_of_week");
             entity.Property(e => e.EntryMode).HasColumnName("entry_mode");
-            entity.Property(e => e.Fraud).HasColumnName("fraud");
+            entity.Property(e => e.Fraud)
+                .HasColumnType("INTEGER")
+                .HasColumnName("fraud");
+            entity.Property(e => e.PredFraud)
+                .HasColumnType("INTEGER")
+                .HasColumnName("pred_fraud");
             entity.Property(e => e.ShippingAddress).HasColumnName("shipping_address");
             entity.Property(e => e.Time).HasColumnName("time");
             entity.Property(e => e.TypeOfCard).HasColumnName("type_of_card");
@@ -98,6 +103,39 @@ public partial class IntexW24datasetContext : DbContext
             entity.Property(e => e.Year)
                 .HasColumnType("NUMERIC")
                 .HasColumnName("year");
+            entity.Property(e => e.Recommendation1)
+                .HasColumnType("NUMERIC")
+                .HasColumnName("recommendation1");
+            entity.Property(e => e.Similarity1)
+                .HasColumnType("NUMERIC")
+                .HasColumnName("similarity1");
+            entity.Property(e => e.Recommendation2)
+                .HasColumnType("NUMERIC")
+                .HasColumnName("recommendation2");
+            entity.Property(e => e.Similarity2)
+                .HasColumnType("NUMERIC")
+                .HasColumnName("similarity2");
+            entity.Property(e => e.Recommendation3)
+                .HasColumnType("NUMERIC")
+                .HasColumnName("recommendation3");
+            entity.Property(e => e.Similarity3)
+                .HasColumnType("NUMERIC")
+                .HasColumnName("similarity3");
+            entity.Property(e => e.Recommendation4)
+                .HasColumnType("NUMERIC")
+                .HasColumnName("recommendation4");
+            entity.Property(e => e.Similarity4)
+                .HasColumnType("NUMERIC")
+                .HasColumnName("similarity4");
+            entity.Property(e => e.Recommendation5)
+                .HasColumnType("NUMERIC")
+                .HasColumnName("recommendation5");
+            entity.Property(e => e.Similarity5)
+                .HasColumnType("NUMERIC")
+                .HasColumnName("similarity5");
+            entity.Property(e => e.PopularityRank)
+                .HasColumnType("NUMERIC")
+                .HasColumnName("popularity_rank");
         });
 
         OnModelCreatingPartial(modelBuilder);

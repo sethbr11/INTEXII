@@ -30,4 +30,6 @@ public partial class Order
     public string TypeOfCard { get; set; } = null!;
 
     public int Fraud { get; set; }
+
+    public int PredFraud { get; set; }
 }

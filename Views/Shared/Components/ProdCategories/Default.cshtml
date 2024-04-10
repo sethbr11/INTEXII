@@ -1,0 +1,16 @@
+﻿@{
+}
+
+@model IEnumerable<string>
+
+<select name="categories" id="categories">
+    <option value="">Categories</option>
+    @foreach (string ct in Model ?? Enumerable.Empty<string>()) {
+        @if (ct == ViewBag.SelectedProdCategory) {
+            <option selected asp-controller="Home" asp-action="Shop" asp-route-prodCategory="@ct" asp-route-pageNum="1">@ct</option>
+        }
+        else {
+            <option value="@ct">@ct</option>
+        }
+    }
+</select>

@@ -19,21 +19,22 @@ namespace INTEXII.Controllers {
             return View(data);
         }
 
-        public IActionResult Shop(int pageNum, string prodCategory) {
-            int pageSize = 10;
+        public IActionResult Shop(int pageNum = 1, string prodCategory = null) {
+            int pageSize = 5;
 
             var data = new ProductsListViewModel {
                 Products = _repo.Products
-                .Where(x => x.Category == prodCategory || prodCategory == null)
-                    .OrderBy(x => x.Name) // CHANGE TO BE POPULARITY
+                .Where(x => x.PublicCategory == prodCategory || prodCategory == null)
+                    .OrderByDescending(x => x.PopularityRank) // Sort by popularity descending
+                    .ThenBy(x => x.Price) // Then sort by price ascending (if applicable)
                     .Skip((pageNum - 1) * pageSize)
                     .Take(pageSize),
                 PaginationInfo = new PaginationInfo {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
                     TotalItems = prodCategory == null ?
-                                                _repo.Products.Count() :
-                                                _repo.Products.Where(x => x.Category == prodCategory).Count()
+                        _repo.Products.Count() :
+                        _repo.Products.Where(x => x.Category == prodCategory).Count()
                 },
                 CurrentProdCategory = prodCategory
             };
