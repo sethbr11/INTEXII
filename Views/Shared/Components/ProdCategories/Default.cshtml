@@ -6,10 +6,10 @@
 <select onchange="window.location = this.options[this.selectedIndex].value;">
     <option value="">Category</option> @*Default value, nothing happens when you click it*@
     @foreach (string ct in Model ?? Enumerable.Empty<string>()) {
-        var prodColor = ViewBag.SelectedProdColor ?? null; // If it is null, it will not filter by color
+        var prodColor = ViewBag.CurrentProdColor ?? null; // If it is null, it will not filter by color
         var url = Url.Action("Shop", "Home", new { prodCategory = ct, prodColor, pageNum = 1 });
-        @if (ct == ViewBag.SelectedProdCategory) {
-            <option selected value="@url">@ct</option>
+        @if (ct == ViewBag.CurrentProdCategory) {
+             <option selected value="@url">@ct</option>
         }
         else {
             <option value="@url">@ct</option>

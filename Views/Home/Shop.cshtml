@@ -16,13 +16,20 @@
     <div class="col">
         <vc:prod-colors />
     </div>
+    <div class="col">
+        <!--Buttons to change the number of results per page here-->
+    </div>
 </div>
 
+@if (Model.Products.Count() > 0) {
+    @foreach (Product p in Model.Products) {
+        <partial name="ProductSummary" model="p" />
+    }
 
-@foreach (Product p in Model.Products) {
-    <partial name="ProductSummary" model="p" />
+    <div page-model="@Model.PaginationInfo" page-action="Shop" page-classes-enabled="true"
+         page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+         page-url-projectType="@Model.CurrentProdCategory" class="btn-group pull-right m-1"></div>
 }
-
-<div page-model="@Model.PaginationInfo" page-action="Shop" page-classes-enabled="true"
-     page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
-     page-url-projectType="@Model.CurrentProdCategory" class="btn-group pull-right m-1"></div>
+else {
+    <h2>No Products Match Your Filtering</h2>
+}

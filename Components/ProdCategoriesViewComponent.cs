@@ -9,8 +9,8 @@ namespace INTEXII.Components {
         public ProdCategoriesViewComponent(IIntexW24datasetRepository temp) => _repo = temp;
 
         public IViewComponentResult Invoke() {
-            ViewBag.SelectedProdCategory = RouteData?.Values["prodCategory"];
-            ViewBag.SelectedProdColor = RouteData?.Values["prodColor"];
+            ViewBag.CurrentProdCategory = Request.Query["prodCategory"];
+            ViewBag.CurrentProdColor = Request.Query["prodColor"];
 
             var prodCategories = _repo.Products
                 .Select(x => x.PublicCategory)
