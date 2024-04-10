@@ -19,12 +19,19 @@ namespace INTEXII.Controllers {
             return View(data);
         }
 
-        public IActionResult Shop(int pageNum = 1, string prodCategory = null) {
+        public IActionResult Shop(int pageNum = 1, string prodCategory = null, string prodColor = null) {
             int pageSize = 5;
 
             var data = new ProductsListViewModel {
                 Products = _repo.Products
-                .Where(x => x.PublicCategory == prodCategory || prodCategory == null)
+                    .Where(x => x.PublicCategory == prodCategory || prodCategory == null)
+                    .Where(x => x.PrimaryColor == prodColor || prodColor == null)
+                    // GET FILTERING BY COLOR AS WELL
+                    //.Where(x => 
+                        //(x.PublicCategory == prodCategory && x.PrimaryColor == prodColor) ||
+                        //(x.PublicCategory == prodCategory && x.PrimaryColor == null) ||
+                        //(x.PublicCategory == null && x.PrimaryColor == prodColor) ||
+                        //(prodCategory == null && prodColor == null))
                     .OrderByDescending(x => x.PopularityRank) // Sort by popularity descending
                     .ThenBy(x => x.Price) // Then sort by price ascending (if applicable)
                     .Skip((pageNum - 1) * pageSize)
@@ -36,7 +43,8 @@ namespace INTEXII.Controllers {
                         _repo.Products.Count() :
                         _repo.Products.Where(x => x.Category == prodCategory).Count()
                 },
-                CurrentProdCategory = prodCategory
+                CurrentProdCategory = prodCategory,
+                CurrentProdColor = prodColor
             };
 
             return View(data);

@@ -94,7 +94,16 @@ app.MapControllerRoute(
     name: "pageNumAndType",
     pattern: "Shop/{prodCategory}/{pageNum}",
     defaults: new { Controller = "Home", action = "Shop", pageNum = 1 });
-
+/*
+app.MapControllerRoute(
+    name: "pageNumAndColor",
+    pattern: "Shop/All/{prodColor}/{pageNum}",
+    defaults: new { Controller = "Home", action = "Shop", pageNum = 1 });
+app.MapControllerRoute(
+    name: "pageNumTypeColor",
+    pattern: "Shop/{prodCategory}/{prodColor}/{pageNum}",
+    defaults: new { Controller = "Home", action = "Shop", pageNum = 1 });
+*/
 // For some reason this ruins the returnUrl
 // Routing for ProductDetail
 //app.MapControllerRoute(

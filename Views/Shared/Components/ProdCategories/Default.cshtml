@@ -3,11 +3,12 @@
 
 @model IEnumerable<string>
 
-<select name="categories" id="categories">
-    <option value="">Categories</option>
+<!--FIX THIS FOR IF YOU ARE TRYING TO SELECT FROM ANOTHER CATEGORY PAGE-->
+<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value + '/1');">
+    <option value="">Category</option> @*Default value, nothing happens when you click it*@
     @foreach (string ct in Model ?? Enumerable.Empty<string>()) {
         @if (ct == ViewBag.SelectedProdCategory) {
-            <option selected asp-controller="Home" asp-action="Shop" asp-route-prodCategory="@ct" asp-route-pageNum="1">@ct</option>
+            <option selected >@ct</option>
         }
         else {
             <option value="@ct">@ct</option>
