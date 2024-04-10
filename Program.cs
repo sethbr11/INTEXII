@@ -100,12 +100,12 @@ app.UseAuthorization();
 // See here: https://www.stackhawk.com/blog/net-content-security-policy-guide-what-it-is-and-how-to-enable-it/
 app.Use(async (context, next) => {
     context.Response.Headers.Add("Content-Security-Policy",
-        "default-src 'self'; " +
+        "default-src 'self' http://localhost:53172 wss://localhost:44346;" +
         "script-src 'self'; " +
         "style-src 'self'; " +
         "font-src 'self'; " +
-        "img-src 'self'; " +
-        "frame-src 'self' http://localhost:53172;");
+        "img-src 'self' http://www.w3.org https://m.media-amazon.com/ https://www.lego.com/ https://images.brickset.com/; " +
+        "frame-src 'self';");
 
     await next();
 });
