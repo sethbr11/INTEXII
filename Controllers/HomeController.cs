@@ -20,7 +20,9 @@ namespace INTEXII.Controllers {
         }
 
         public IActionResult Shop(int pageNum = 1, string prodCategory = null, string prodColor = null) {
-            int pageSize = 5;
+
+            int pageSize = TempData["PageSize"] != null ? (int)TempData["PageSize"] : 5;
+
 
             var data = new ProductsListViewModel {
                 Products = _repo.Products
@@ -43,6 +45,13 @@ namespace INTEXII.Controllers {
 
             return View(data);
         }
+
+        [HttpPost]
+        public IActionResult SetResultsPerPage(int resultsPerPage)
+        {
+            TempData["PageSize"] = resultsPerPage;
+            return RedirectToAction("Shop");
+        } 
 
         public IActionResult ProductDetail(int productId, string returnUrl) {
             try { // Find the product and go to that product's page
