@@ -83,6 +83,7 @@ if (app.Environment.IsDevelopment()) {
 else {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    // https://www.namecheap.com/support/knowledgebase/article.aspx/9711/38/how-to-check-if-hsts-is-enabled/
     app.UseHsts();
 }
 
