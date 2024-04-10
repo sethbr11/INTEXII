@@ -10,6 +10,7 @@ namespace INTEXII.Components {
 
         public IViewComponentResult Invoke() {
             ViewBag.SelectedProdCategory = RouteData?.Values["prodCategory"];
+            ViewBag.SelectedProdColor = RouteData?.Values["prodColor"];
 
             var prodCategories = _repo.Products
                 .Select(x => x.PublicCategory)

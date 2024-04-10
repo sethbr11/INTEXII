@@ -84,50 +84,11 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// Routing (must be in the preferred order)
-// Routing for Shop
-app.MapControllerRoute(
-    name: "pagination", 
-    pattern: "Shop/{pageNum}", 
-    defaults: new { Controller = "Home", action = "Shop", pageNum = 1 });
-app.MapControllerRoute(
-    name: "pageNumAndType",
-    pattern: "Shop/{prodCategory}/{pageNum}",
-    defaults: new { Controller = "Home", action = "Shop", pageNum = 1 });
-/*
-app.MapControllerRoute(
-    name: "pageNumAndColor",
-    pattern: "Shop/All/{prodColor}/{pageNum}",
-    defaults: new { Controller = "Home", action = "Shop", pageNum = 1 });
-app.MapControllerRoute(
-    name: "pageNumTypeColor",
-    pattern: "Shop/{prodCategory}/{prodColor}/{pageNum}",
-    defaults: new { Controller = "Home", action = "Shop", pageNum = 1 });
-*/
-// For some reason this ruins the returnUrl
-// Routing for ProductDetail
-//app.MapControllerRoute(
-//    name: "productDetail",
-//    pattern: "ProductDetail/{productId?}/{returnUrl?}",
-//    defaults: new { Controller = "Home", action = "ProductDetail" });
-
-// Routing for AboutUs
-app.MapControllerRoute(
-    name: "aboutUs",
-    pattern: "AboutUs",
-    defaults: new { Controller = "Home", action = "AboutUs"});
-
-// Routing for Index
-app.MapControllerRoute(
-    name: "index",
-    pattern: "",
-    defaults: new {Controller = "Home", action = "Index"});
-
 // Default routing
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{action=Index}/{id?}",
-//    defaults: new { Controller = "Home" });
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{action=Index}/{id?}",
+    defaults: new { Controller = "Home" });
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
 
