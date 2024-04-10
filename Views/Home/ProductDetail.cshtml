@@ -3,3 +3,24 @@
 *@
 @{
 }
+@model Tuple<Product, string> // The first item is the product being viewed, the second item is the returnUrl
+
+<div class="row">
+    <div class="col-6">
+        <div class="row">
+            <img src="@Model.Item1.ImgLink" alt="@Model.Item1.Name Image" style="width: inherit;" />
+        </div>
+        <div class="row">
+            <form id="@Model.Item1.ProductId" method="post" asp-page="/Cart">
+                <input type="hidden" asp-for="@Model.Item1.ProductId" id="ProductId" name="ProductId" />
+                <input type="hidden" name="returnUrl" value="@Model.Item2" />
+                <button type="submit" class="btn-outline-success btn-sm float-end">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-6">
+        <h2>@Model.Item1.Name</h2>
+        <h2>@Model.Item1.Price</h2>
+        <p>@Model.Item1.Description</p>
+    </div>
+</div>

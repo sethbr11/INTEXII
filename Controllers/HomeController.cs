@@ -35,10 +35,21 @@ namespace INTEXII.Controllers {
                                                 _repo.Products.Count() :
                                                 _repo.Products.Where(x => x.Category == prodCategory).Count()
                 },
-                CurrentProjectType = prodCategory
+                CurrentProdCategory = prodCategory
             };
 
             return View(data);
+        }
+
+        public IActionResult ProductDetail(int productId, string returnUrl) {
+            try { // Find the product and go to that product's page
+                var data = _repo.Products.First(x => x.ProductId == productId);
+                return View(Tuple.Create(data, returnUrl));
+            }
+            // If there was no productId passed or the productId is out of range, go to the Shop IActionResult
+            catch (Exception ex) { // We won't do anything with the exception
+                return RedirectToAction("Shop");
+            }
         }
 
         public IActionResult AboutUs() => View();
