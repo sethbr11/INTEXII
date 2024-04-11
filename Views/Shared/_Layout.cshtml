@@ -11,26 +11,38 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">INTEXII</a>
+        @* styled *@
+        <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+            <div class="container">
+                <a class="navbar-brand" class="active" asp-area="" asp-controller="Home" asp-action="Index"><img src="images/AuroraBricksLogo.png" style="width: 30rem;"></a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarsFurni">
+                    <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" asp-area="" asp-controller="Home"
+                               asp-action="Shop" asp-route-pageNum="1">Shop</a>
+                        </li>
+                        <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="AboutUs">About us</a></li>
+                        <li><a class="nav-link" href="services.html">Services</a></li>
+                        <li><a class="nav-link" href="contact.html">Contact us</a></li>
+                    </ul> 
+                </div>
+            </div>
+            <div >
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" 
-                                                          asp-action="Shop" asp-route-pageNum="1">Shop</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a>
-                        </li>
-                    </ul>
+
                     <partial name="_LoginPartial" />
                     <div class="navbar-text text-end">
                         <vc:cart-summary />
@@ -38,6 +50,8 @@
                 </div>
             </div>
         </nav>
+
+
     </header>
     <div class="container">
         <partial name="_CookieConsentPartial" /> <!--Cookie consent line-->
