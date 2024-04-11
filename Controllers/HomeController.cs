@@ -1,5 +1,6 @@
 using INTEXII.Models;
 using INTEXII.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.ProjectModel;
 using System.Diagnostics;
@@ -11,14 +12,17 @@ namespace INTEXII.Controllers {
         // Constructor
         public HomeController(IIntexW24datasetRepository temp) => _repo = temp;
 
+        [AllowAnonymous]
         public IActionResult Index() {
             var data = Tuple.Create(_repo.Customers.ToList(), 
                                     _repo.LineItems.ToList(),
                                     _repo.Orders.ToList(),
-                                    _repo.Products.ToList());
+                                    _repo.Products.ToList(),
+                                    _repo.Recommendations.ToList());
             return View(data);
         }
 
+        [AllowAnonymous]
         public IActionResult Shop(int pageNum = 1, string prodCategory = null, string prodColor = null) {
 
             int pageSize = TempData["PageSize"] != null ? (int)TempData["PageSize"] : 5;
@@ -46,13 +50,15 @@ namespace INTEXII.Controllers {
             return View(data);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult SetResultsPerPage(int resultsPerPage)
         {
             TempData["PageSize"] = resultsPerPage;
             return RedirectToAction("Shop");
-        } 
+        }
 
+        [AllowAnonymous]
         public IActionResult ProductDetail(int productId, string returnUrl) {
             try { // Find the product and go to that product's page
                 var data = _repo.Products.First(x => x.ProductId == productId);
@@ -64,10 +70,13 @@ namespace INTEXII.Controllers {
             }
         }
 
+        [AllowAnonymous]
         public IActionResult AboutUs() => View();
 
+        [AllowAnonymous]
         public IActionResult Privacy() => View();
 
+        [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

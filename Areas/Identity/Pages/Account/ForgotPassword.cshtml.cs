@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace INTEXII.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;

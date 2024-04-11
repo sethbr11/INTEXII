@@ -1,10 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "AuroraBricks";
 }
 
-@model Tuple<List<Customer>, List<LineItem>, List<Order>, List<Product>>
-
-
+@model Tuple<List<Customer>, List<LineItem>, List<Order>, List<Product>, List<Recommendation>>
 
 <!-- /*
 * Bootstrap 5
@@ -414,3 +412,181 @@
 	</body>
 
 </html>
+=======
+<h3>Customer Table</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <td>CustomerID</td>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Birth Date</td>
+            <td>Country of Residence</td>
+            <td>Gender</td>
+            <td>Age</td>
+            <td>Username</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model.Item1) {
+            <tr>
+                <td>@c.CustomerId</td>
+                <td>@c.FirstName</td>
+                <td>@c.LastName</td>
+                <td>@c.BirthDate</td>
+                <td>@c.CountryOfResidence</td>
+                <td>@c.Gender</td>
+                <td>@c.Age</td>
+                <td>@c.Username</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<h3>LineItem Table</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Transaction ID</td>
+            <td>Product ID</td>
+            <td>Qty</td>
+            <td>Rating</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var li in Model.Item2) {
+            <tr>
+                <td>@li.TransactionId</td>
+                <td>@li.ProductId</td>
+                <td>@li.Qty</td>
+                <td>@li.Rating</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<h3>Recommendation Table</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Customer ID</td>
+            <td>Recommendation 1</td>
+            <td>Recommendation 2</td>
+            <td>Recommendation 3</td>
+            <td>Recommendation 4</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var li in Model.Item5) {
+            <tr>
+                <td>@li.CustomerId</td>
+                <td>@li.RecProdId1</td>
+                <td>@li.RecProdId2</td>
+                <td>@li.RecProdId3</td>
+                <td>@li.RecProdId4</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<h3>Orders Table</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Transaction ID</td>
+            <td>Customer ID</td>
+            <td>Date</td>
+            <td>Day of Week</td>
+            <td>Time</td>
+            <td>Entry Mode</td>
+            <td>Amount</td>
+            <td>Type of Transaction</td>
+            <td>Country of Transaction</td>
+            <td>Shipping Address</td>
+            <td>Bank</td>
+            <td>Type of Card</td>
+            <td>Fraud</td>
+            <td>PredFraud</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var o in Model.Item3) {
+            <tr>
+                <td>@o.TransactionId</td>
+                <td>@o.CustomerId</td>
+                <td>@o.Date</td>
+                <td>@o.DayOfWeek</td>
+                <td>@o.Time</td>
+                <td>@o.EntryMode</td>
+                <td>@o.Amount</td>
+                <td>@o.TypeOfTransaction</td>
+                <td>@o.CountryOfTransaction</td>
+                <td>@o.ShippingAddress</td>
+                <td>@o.Bank</td>
+                <td>@o.TypeOfCard</td>
+                <td>@o.Fraud</td>
+                <td>@o.PredFraud</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<h3>Product Table</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Product ID</td>
+            <td>Name</td>
+            <td>Year</td>
+            <td>Num Parts</td>
+            <td>Price</td>
+            <td>Img Link</td>
+            <td>Primary Color</td>
+            <td>Secondary Color</td>
+            <td>Description</td>
+            <td>Category</td>
+            <td>Rec1</td>
+            <td>Sim1</td>
+            <td>Rec2</td>
+            <td>Sim2</td>
+            <td>Rec3</td>
+            <td>Sim3</td>
+            <td>Rec4</td>
+            <td>Sim4</td>
+            <td>Rec5</td>
+            <td>Sim5</td>
+            <td>PopularityRank</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.Item4) {
+            <tr>
+                <td>@p.ProductId</td>
+                <td>@p.Name</td>
+                <td>@p.Year</td>
+                <td>@p.NumParts</td>
+                <td>@p.Price</td>
+                <td>@p.ImgLink</td>
+                <td>@p.PrimaryColor</td>
+                <td>@p.SecondaryColor</td>
+                <td>@p.Description</td>
+                <td>@p.Category</td>
+                <td>@p.Recommendation1</td>
+                <td>@p.Similarity1</td>
+                <td>@p.Recommendation2</td>
+                <td>@p.Similarity2</td>
+                <td>@p.Recommendation3</td>
+                <td>@p.Similarity3</td>
+                <td>@p.Recommendation4</td>
+                <td>@p.Similarity4</td>
+                <td>@p.Recommendation5</td>
+                <td>@p.Similarity5</td>
+                <td>@p.PopularityRank</td>
+            </tr>
+        }
+    </tbody>
+</table>

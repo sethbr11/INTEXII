@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 namespace INTEXII.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class LoginWithRecoveryCodeModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
