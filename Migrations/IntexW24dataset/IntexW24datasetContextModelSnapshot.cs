@@ -126,11 +126,12 @@ namespace INTEXII.Migrations.IntexW24dataset
                         .HasColumnName("entry_mode");
 
                     b.Property<int>("Fraud")
-                        .HasColumnType("NUMERIC")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("fraud");
 
                     b.Property<int>("PredFraud")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("pred_fraud");
 
                     b.Property<string>("ShippingAddress")
                         .IsRequired()
@@ -187,7 +188,7 @@ namespace INTEXII.Migrations.IntexW24dataset
                         .HasColumnType("NUMERIC")
                         .HasColumnName("num_parts");
 
-                    b.Property<int?>("PopularityRank")
+                    b.Property<double?>("PopularityRank")
                         .HasColumnType("NUMERIC")
                         .HasColumnName("popularity_rank");
 
@@ -256,6 +257,35 @@ namespace INTEXII.Migrations.IntexW24dataset
                         .IsUnique();
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("INTEXII.Models.Recommendation", b =>
+                {
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("customer_id");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("product_id");
+
+                    b.Property<string>("BasedOnLiked")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("based_on_liked");
+
+                    b.Property<string>("ProductRecommendation")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("prod_recommendation");
+
+                    b.Property<float>("RankMean")
+                        .HasColumnType("NUMERIC")
+                        .HasColumnName("rank_mean");
+
+                    b.HasKey("CustomerId", "ProductId");
+
+                    b.ToTable("Recommendations");
                 });
 #pragma warning restore 612, 618
         }

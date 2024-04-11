@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model Tuple<List<Customer>, List<LineItem>, List<Order>, List<Product>>
+@model Tuple<List<Customer>, List<LineItem>, List<Order>, List<Product>, List<Recommendation>>
 
 <h3>Customer Table</h3>
 <table class="table">
@@ -52,6 +52,31 @@
                 <td>@li.ProductId</td>
                 <td>@li.Qty</td>
                 <td>@li.Rating</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<h3>Recommendation Table</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Customer ID</td>
+            <td>Recommendation</td>
+            <td>Product ID</td>
+            <td>Rank Mean</td>
+            <td>Because You Liked</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var li in Model.Item5) {
+            <tr>
+                <td>@li.CustomerId</td>
+                <td>@li.ProductRecommendation</td>
+                <td>@li.ProductId</td>
+                <td>@li.RankMean</td>
+                <td>@li.BasedOnLiked</td>
             </tr>
         }
     </tbody>

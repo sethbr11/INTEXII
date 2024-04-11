@@ -5,10 +5,10 @@
         // Constructor
         public EFIntexW24datasetRepository(IntexW24datasetContext temp) => _repo = temp;
 
-        
         public IQueryable<Customer> Customers => _repo.Customers;
         public IQueryable<LineItem> LineItems => _repo.LineItems;
         public IQueryable<Order> Orders => _repo.Orders;
         public IQueryable<Product> Products => _repo.Products;
+        public IQueryable<Recommendation> Recommendations => _repo.Recommendations;
     }
 }

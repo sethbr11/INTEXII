@@ -15,7 +15,8 @@ namespace INTEXII.Controllers {
             var data = Tuple.Create(_repo.Customers.ToList(), 
                                     _repo.LineItems.ToList(),
                                     _repo.Orders.ToList(),
-                                    _repo.Products.ToList());
+                                    _repo.Products.ToList(),
+                                    _repo.Recommendations.ToList());
             return View(data);
         }
 
