@@ -63,20 +63,20 @@
     <thead>
         <tr>
             <td>Customer ID</td>
-            <td>Recommendation</td>
-            <td>Product ID</td>
-            <td>Rank Mean</td>
-            <td>Because You Liked</td>
+            <td>Recommendation 1</td>
+            <td>Recommendation 2</td>
+            <td>Recommendation 3</td>
+            <td>Recommendation 4</td>
         </tr>
     </thead>
     <tbody>
         @foreach (var li in Model.Item5) {
             <tr>
                 <td>@li.CustomerId</td>
-                <td>@li.ProductRecommendation</td>
-                <td>@li.ProductId</td>
-                <td>@li.RankMean</td>
-                <td>@li.BasedOnLiked</td>
+                <td>@li.RecProdId1</td>
+                <td>@li.RecProdId2</td>
+                <td>@li.RecProdId3</td>
+                <td>@li.RecProdId4</td>
             </tr>
         }
     </tbody>

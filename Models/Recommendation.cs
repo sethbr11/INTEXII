@@ -4,10 +4,9 @@ namespace INTEXII.Models {
     public class Recommendation {
         [Key]
         public int CustomerId { get; set; }
-        public string ProductRecommendation {  get; set; }
-        [Key]
-        public int ProductId { get; set; }
-        public float RankMean { get; set; }
-        public string BasedOnLiked { get; set; }
+        public int RecProdId1 { get; set; }
+        public int RecProdId2 { get; set; }
+        public int RecProdId3 { get; set; }
+        public int RecProdId4 { get; set; }
     }
 }
