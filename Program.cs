@@ -148,13 +148,20 @@ using (var scope = app.Services.CreateScope()) {
     }
 }
 
-// Some default admin accounts
+// Add admins here admin accounts
+/*
 using (var scope = app.Services.CreateScope()) {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    // Ensure "Admin" role exists
+    if (await roleManager.FindByNameAsync("Admin") == null) {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
 
     // Our default admin
-    string email = "groupfourteensis@gmail.com";
-    string password = "Group1-14INTEX!isCool";
+    string email = PUT EMAIL HERE
+    string password = PUT PASSWORD HERE (make sure it aligns with password requirements above)
 
     if (await userManager.FindByEmailAsync(email) == null) {
         var user = new IdentityUser();
@@ -162,10 +169,14 @@ using (var scope = app.Services.CreateScope()) {
         user.Email = email;
         user.EmailConfirmed = true;
 
-        await userManager.CreateAsync(user, password);
+        var result = await userManager.CreateAsync(user, password);
 
-        userManager.AddToRoleAsync(user, "Admin");
+        if (result.Succeeded) {
+            await userManager.AddToRoleAsync(user, "Admin");
+        }
     }
 }
+*/
+
 
 app.Run();
