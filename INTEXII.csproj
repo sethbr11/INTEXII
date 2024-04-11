@@ -29,4 +29,10 @@
     <Folder Include="wwwroot\lib\qrcode\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="IntexW24Dataset.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

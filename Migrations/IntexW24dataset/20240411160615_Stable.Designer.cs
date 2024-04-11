@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace INTEXII.Migrations.IntexW24dataset
 {
     [DbContext(typeof(IntexW24datasetContext))]
-    [Migration("20240411000706_recommendationTable")]
-    partial class recommendationTable
+    [Migration("20240411160615_Stable")]
+    partial class Stable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,6 +55,7 @@ namespace INTEXII.Migrations.IntexW24dataset
                         .HasColumnName("last_name");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("username");
 
@@ -265,28 +266,27 @@ namespace INTEXII.Migrations.IntexW24dataset
             modelBuilder.Entity("INTEXII.Models.Recommendation", b =>
                 {
                     b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasColumnName("customer_id");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("RecProdId1")
                         .HasColumnType("INTEGER")
-                        .HasColumnName("product_id");
+                        .HasColumnName("rec_prod_id_1");
 
-                    b.Property<string>("BasedOnLiked")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("based_on_liked");
+                    b.Property<int>("RecProdId2")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("rec_prod_id_2");
 
-                    b.Property<string>("ProductRecommendation")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("prod_recommendation");
+                    b.Property<int>("RecProdId3")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("rec_prod_id_3");
 
-                    b.Property<float>("RankMean")
-                        .HasColumnType("NUMERIC")
-                        .HasColumnName("rank_mean");
+                    b.Property<int>("RecProdId4")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("rec_prod_id_4");
 
-                    b.HasKey("CustomerId", "ProductId");
+                    b.HasKey("CustomerId");
 
                     b.ToTable("Recommendations");
                 });
