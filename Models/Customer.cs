@@ -19,5 +19,5 @@ public partial class Customer
 
     public double? Age { get; set; }
 
-    public string? Username { get; set; }
+    public string Username { get; set; }
 }
