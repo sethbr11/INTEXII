@@ -58,19 +58,23 @@ public partial class IntexW24datasetContext : DbContext
         });
 
         modelBuilder.Entity<Recommendation>(entity => {
-            entity.HasKey(e => new { e.CustomerId, e.ProductId });
+            entity.HasKey(e => e.CustomerId);
 
             entity.Property(e => e.CustomerId)
                 .HasColumnType("INTEGER")
                 .HasColumnName("customer_id");
-            entity.Property(e => e.ProductRecommendation).HasColumnName("prod_recommendation");
-            entity.Property(e => e.ProductId)
+            entity.Property(e => e.RecProdId1)
                 .HasColumnType("INTEGER")
-                .HasColumnName("product_id");
-            entity.Property(e => e.RankMean)
-                .HasColumnType("NUMERIC")
-                .HasColumnName("rank_mean");
-            entity.Property(e => e.BasedOnLiked).HasColumnName("based_on_liked");
+                .HasColumnName("rec_prod_id_1");
+            entity.Property(e => e.RecProdId2)
+                .HasColumnType("INTEGER")
+                .HasColumnName("rec_prod_id_2");
+            entity.Property(e => e.RecProdId3)
+                .HasColumnType("INTEGER")
+                .HasColumnName("rec_prod_id_3");
+            entity.Property(e => e.RecProdId4)
+                .HasColumnType("INTEGER")
+                .HasColumnName("rec_prod_id_4");
         });
 
         modelBuilder.Entity<Order>(entity =>
