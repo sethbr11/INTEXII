@@ -4,180 +4,215 @@
 
 @model Tuple<List<Customer>, List<LineItem>, List<Order>, List<Product>, List<Recommendation>>
 
-<h3>Customer Table</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <td>CustomerID</td>
-            <td>First Name</td>
-            <td>Last Name</td>
-            <td>Birth Date</td>
-            <td>Country of Residence</td>
-            <td>Gender</td>
-            <td>Age</td>
-            <td>Username</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var c in Model.Item1) {
-            <tr>
-                <td>@c.CustomerId</td>
-                <td>@c.FirstName</td>
-                <td>@c.LastName</td>
-                <td>@c.BirthDate</td>
-                <td>@c.CountryOfResidence</td>
-                <td>@c.Gender</td>
-                <td>@c.Age</td>
-                <td>@c.Username</td>
-            </tr>
-        }
-    </tbody>
-</table>
+	<body>
 
-<br />
-<h3>LineItem Table</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <td>Transaction ID</td>
-            <td>Product ID</td>
-            <td>Qty</td>
-            <td>Rating</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var li in Model.Item2) {
-            <tr>
-                <td>@li.TransactionId</td>
-                <td>@li.ProductId</td>
-                <td>@li.Qty</td>
-                <td>@li.Rating</td>
-            </tr>
-        }
-    </tbody>
-</table>
+		<!-- The modal -->
+		<div id="myModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<div style="text-align: center; margin-bottom: 1rem;">
+					<h2 style="color: black;">Do you want to add<br>this to your cart?</h2>
+				</div>
+				<div style="display: flex; justify-content: center; align-items: center;">
+					<img src="images/Batman.jpg" class="img-fluid product-thumbnail" style="margin-bottom: 1rem; width: 70%;">
+				</div>
+				<div style="text-align: center; margin-bottom: 1rem; color: black;">
+					<h4>Batman Lego Set</h4>
+				</div>		
+				<div style="text-align: center;">
+					<button class="btn btn-primary">
+						<p style="margin-bottom: 0rem;">No</p>
+					</button>
+					<button class="btn btn-primary">
+						<p style="margin-bottom: 0rem;">Yes</p>
+					</button>
+				</div>
+			</div>
+		</div>
 
-<br />
-<h3>Recommendation Table</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <td>Customer ID</td>
-            <td>Recommendation 1</td>
-            <td>Recommendation 2</td>
-            <td>Recommendation 3</td>
-            <td>Recommendation 4</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var li in Model.Item5) {
-            <tr>
-                <td>@li.CustomerId</td>
-                <td>@li.RecProdId1</td>
-                <td>@li.RecProdId2</td>
-                <td>@li.RecProdId3</td>
-                <td>@li.RecProdId4</td>
-            </tr>
-        }
-    </tbody>
-</table>
+		<!-- Start Hero Section -->
+			<div class="hero">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-lg-5">
+							<div class="intro-excerpt">
+								<h1>Look At Our <span clsas="d-block">New Lego Sets</span></h1>
+								<p class="mb-4">We feature new Lego sets every week, come check out our wide variety! </p>
+                                <br><br>
+						<p>
+							<a class="btn btn-secondary me-2" asp-area="" asp-controller="Home"
+							   asp-action="Shop" asp-route-pageNum="1">Explore</a>
+						</p>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<div class="hero-img-wrap">
+								<img src="images/HarryPotterLego-removebg.png" style="width: 35rem;" class="img-fluid">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- End Hero Section -->
 
-<br />
-<h3>Orders Table</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <td>Transaction ID</td>
-            <td>Customer ID</td>
-            <td>Date</td>
-            <td>Day of Week</td>
-            <td>Time</td>
-            <td>Entry Mode</td>
-            <td>Amount</td>
-            <td>Type of Transaction</td>
-            <td>Country of Transaction</td>
-            <td>Shipping Address</td>
-            <td>Bank</td>
-            <td>Type of Card</td>
-            <td>Fraud</td>
-            <td>PredFraud</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var o in Model.Item3) {
-            <tr>
-                <td>@o.TransactionId</td>
-                <td>@o.CustomerId</td>
-                <td>@o.Date</td>
-                <td>@o.DayOfWeek</td>
-                <td>@o.Time</td>
-                <td>@o.EntryMode</td>
-                <td>@o.Amount</td>
-                <td>@o.TypeOfTransaction</td>
-                <td>@o.CountryOfTransaction</td>
-                <td>@o.ShippingAddress</td>
-                <td>@o.Bank</td>
-                <td>@o.TypeOfCard</td>
-                <td>@o.Fraud</td>
-                <td>@o.PredFraud</td>
-            </tr>
-        }
-    </tbody>
-</table>
+		<!-- Start Product Section -->
+		<div class="product-section" style="margin-bottom: 8rem;">
+			<div class="container">
+				<div class="row">
 
-<br />
-<h3>Product Table</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <td>Product ID</td>
-            <td>Name</td>
-            <td>Year</td>
-            <td>Num Parts</td>
-            <td>Price</td>
-            <td>Img Link</td>
-            <td>Primary Color</td>
-            <td>Secondary Color</td>
-            <td>Description</td>
-            <td>Category</td>
-            <td>Rec1</td>
-            <td>Sim1</td>
-            <td>Rec2</td>
-            <td>Sim2</td>
-            <td>Rec3</td>
-            <td>Sim3</td>
-            <td>Rec4</td>
-            <td>Sim4</td>
-            <td>Rec5</td>
-            <td>Sim5</td>
-            <td>PopularityRank</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var p in Model.Item4) {
-            <tr>
-                <td>@p.ProductId</td>
-                <td>@p.Name</td>
-                <td>@p.Year</td>
-                <td>@p.NumParts</td>
-                <td>@p.Price</td>
-                <td>@p.ImgLink</td>
-                <td>@p.PrimaryColor</td>
-                <td>@p.SecondaryColor</td>
-                <td>@p.Description</td>
-                <td>@p.Category</td>
-                <td>@p.Recommendation1</td>
-                <td>@p.Similarity1</td>
-                <td>@p.Recommendation2</td>
-                <td>@p.Similarity2</td>
-                <td>@p.Recommendation3</td>
-                <td>@p.Similarity3</td>
-                <td>@p.Recommendation4</td>
-                <td>@p.Similarity4</td>
-                <td>@p.Recommendation5</td>
-                <td>@p.Similarity5</td>
-                <td>@p.PopularityRank</td>
-            </tr>
-        }
-    </tbody>
-</table>
+					<!-- Start Column 1 -->
+					<div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
+						<h2 class="mb-4 section-title" style="font-size: 50px;">Check Out Our Popular Sets!</h2>
+						<p class="mb-4" style="font-size: 20px; color: black;">Come check out the epic sets we have and build with us! </p>
+						<p><a asp-area="" asp-controller="Home"
+							   asp-action="Shop" asp-route-pageNum="1" class="btn">Explore</a></p>
+					</div> 
+					<!-- End Column 1 -->
+
+		      		<!-- Start Column 1 -->
+					  <div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" style="height: 100%;">
+							<img src="images/Batman.jpg" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
+							<h3 class="product-title">Nordic Chair</h3>
+							<strong class="product-price">$50.00</strong>
+
+						<!-- Add to cart -->
+                            <span class="icon-cross" onclick="openModal()">
+								<img src="images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div> 
+					<!-- End Column 1 -->
+					
+		      		<!-- Start Column 1 -->
+					  <div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" style="height: 100%;">
+							<img src="images/Batman.jpg" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
+							<h3 class="product-title">Nordic Chair</h3>
+							<strong class="product-price">$50.00</strong>
+
+						<!-- Add to cart -->
+                            <span class="icon-cross" onclick="openModal()">
+								<img src="images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div> 
+					<!-- End Column 1 -->
+				
+		      		<!-- Start Column 1 -->
+					  <div class="col-12 col-md-4 col-lg-3 mb-5">
+						<a class="product-item" style="height: 100%;">
+							<img src="images/Batman.jpg" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
+							<h3 class="product-title">Nordic Chair</h3>
+							<strong class="product-price">$50.00</strong>
+
+						<!-- Add to cart -->
+                            <span class="icon-cross" onclick="openModal()">
+								<img src="images/cross.svg" class="img-fluid">
+							</span>
+						</a>
+					</div> 
+					<!-- End Column 1 -->
+
+				</div>
+			</div>
+		</div>
+		<!-- End Product Section -->
+
+		<!-- Start Why Choose Us Section -->
+		<div class="why-choose-section">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-lg-6">
+						<h2 class="section-title" style="font-size: 50px;">Why Choose Us</h2>
+						<br>
+						<p style="font-size: 20px; color: black;">We are striving to extend our love for Legos! Come learn more about what makes this so special.</p>
+
+						<div class="row my-5">
+							<div class="col-6 col-md-6">
+								<div class="feature">
+									<div class="icon">
+										<img src="images/truck.svg" alt="Image" class="imf-fluid">
+									</div>
+									<h3>Fast Shipping</h3>
+									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+								</div>
+							</div>
+
+							<div class="col-6 col-md-6">
+								<div class="feature">
+									<div class="icon">
+										<img src="images/bag.svg" alt="Image" class="imf-fluid">
+									</div>
+									<h3>Easy to Shop</h3>
+									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+								</div>
+							</div>
+
+							<div class="col-6 col-md-6">
+								<div class="feature">
+									<div class="icon">
+										<img src="images/support.svg" alt="Image" class="imf-fluid">
+									</div>
+									<h3>24/7 Support</h3>
+									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+								</div>
+							</div>
+
+							<div class="col-6 col-md-6">
+								<div class="feature">
+									<div class="icon">
+										<img src="images/return.svg" alt="Image" class="imf-fluid">
+									</div>
+									<h3>Hassle Free Returns</h3>
+									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-5">
+						<div class="img-wrap">
+							<img src="images/Minecraft-removebg-preview.png" alt="Image" class="img-fluid">
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- End Why Choose Us Section -->
+
+		<script>
+			function openModal() {
+				modal.style.display = "block";
+			}
+
+			function redirectToProduct() {
+				window.location.href = "product_detail.html";
+			}
+
+			// Get the modal
+			var modal = document.getElementById("myModal");
+
+			// Get the <span> element that closes the modal
+			var span = document.getElementsByClassName("close")[0];
+
+			// When the user clicks on <span> (x), close the modal
+			span.onclick = function() {
+			modal.style.display = "none";
+			}
+
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+				if (event.target == modal) {
+					modal.style.display = "none";
+				}
+			}
+
+
+		</script>
+	</body>
+
+</html>

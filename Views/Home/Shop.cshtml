@@ -8,39 +8,81 @@
 @model ProductsListViewModel
 
 <div class="row">
-    <div class="col-7">
-        <h1>Shop</h1>
-    </div>
-    <div class="col">
-        <vc:prod-categories />
-    </div>
-    <div class="col">
-        <vc:prod-colors />
-    </div>
-    <div class="col">
-        <!-- Dropdown menu for changing the number of results per page -->
-        @using (Html.BeginForm("SetResultsPerPage", "Home", FormMethod.Post))
-        {
-            <label for="resultsPerPage">Results per page:</label>
-            <select id="resultsPerPage" name="resultsPerPage">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-            </select>
-            <button type="submit">Apply</button>
-        }
-    </div>
+	<div class="hero" style="padding: 0px; margin-bottom: 5rem; ">
+		<div class="col-lg-5">
+			<div class="intro-excerpt">
+				<h1>Shop</h1>
+			</div>
+		</div>
+	</div>
 </div>
+		<div style="text-align: center; display: flex; justify-content: center; align-items: center; gap: 10px;">
+			<!-- Begin Form for results per page -->
+			@using (Html.BeginForm("SetResultsPerPage", "Home", FormMethod.Post))
+			{
+				<!-- Create buttons for each option to set results per page -->
+				<input type="hidden" name="resultsPerPage" id="resultsPerPage" value="5" />
 
-@if (Model.Products.Count() > 0) {
-    @foreach (Product p in Model.Products) {
-        <partial name="ProductSummary" model="p" />
-    }
+				<!-- Button for 5 results per page -->
+				<button type="submit" class="btn btn-primary" onclick="document.getElementById('resultsPerPage').value = '5'">
+					<p style="margin-bottom: 0rem;">5 Results</p>
+				</button>
 
-    <div page-model="@Model.PaginationInfo" page-action="Shop" page-classes-enabled="true"
-         page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
-         page-url-projectType="@Model.CurrentProdCategory" class="btn-group pull-right m-1"></div>
-}
-else {
-    <h2>No Products Match Your Filtering</h2>
-}
+				<!-- Button for 10 results per page -->
+				<button type="submit" class="btn btn-primary" onclick="document.getElementById('resultsPerPage').value = '10'">
+					<p style="margin-bottom: 0rem;">10 Results</p>
+				</button>
+
+				<!-- Button for 20 results per page -->
+				<button type="submit" class="btn btn-primary" onclick="document.getElementById('resultsPerPage').value = '20'">
+					<p style="margin-bottom: 0rem;">20 Results</p>
+				</button>
+			}
+
+			<!-- Category Filter -->
+			<div style="display: flex; align-items: center;">
+				<label for="category" style="font-weight: 600; color: #000000; font-size: larger; margin-right: 10px;">Category</label>
+				<div class="col" style="height: 2.5rem; border-radius: 25px; width: 8rem; text-align: center; font-size: medium; font-weight: 600; overflow: hidden;">
+					<vc:prod-categories />
+				</div>
+			</div>
+
+			<!-- Color Filter -->
+			<div style="display: flex; align-items: center;">
+				<label for="color" style="font-weight: 600; color: #000000; font-size: larger; margin-right: 10px;">Color</label>
+				<div class="col" style="height: 2.5rem; border-radius: 25px; width: 8rem; text-align: center; font-size: medium; font-weight: 600;">
+					<vc:prod-colors />
+				</div>
+			</div>
+		</div>
+	
+
+<body>
+	<!-- Start Product Section -->
+
+	<div class="untree_co-section product-section before-footer-section">
+		<div class="container">
+			<div class="row">
+
+				@if (Model.Products.Count() > 0) {
+					@foreach (Product p in Model.Products) {
+						<partial name="ProductSummary" model="p" />
+					}
+
+					<div page-model="@Model.PaginationInfo" page-action="Shop" page-classes-enabled="true"
+						 page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+						 page-url-projectType="@Model.CurrentProdCategory" class="btn-group pull-right m-1"></div>
+				}
+				else {
+					<h2>No Products Match Your Filtering</h2>
+				}
+
+
+			</div>
+		</div>
+	</div>
+
+	<!-- End Product Section -->
+</body>
+
+</html>
