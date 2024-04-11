@@ -21,6 +21,7 @@ using Microsoft.Extensions.Logging;
 
 namespace INTEXII.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
