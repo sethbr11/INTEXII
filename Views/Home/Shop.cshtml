@@ -6,31 +6,73 @@
 }
 
 @model ProductsListViewModel
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Untree.co">
+	<link rel="shortcut icon" href="favicon.png">
+
+	<meta name="description" content="" />
+	<meta name="keywords" content="bootstrap, bootstrap4" />
+
+	<!-- Bootstrap CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+	<link href="css/tiny-slider.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+	<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+</head>
 
 <div class="row">
-    <div class="col-7">
-        <h1>Shop</h1>
-    </div>
-    <div class="col">
-        <vc:prod-categories />
-    </div>
-    <div class="col">
-        <vc:prod-colors />
-    </div>
-    <div class="col">
-        <!-- Dropdown menu for changing the number of results per page -->
-        @using (Html.BeginForm("SetResultsPerPage", "Home", FormMethod.Post))
-        {
-            <label for="resultsPerPage">Results per page:</label>
-            <select id="resultsPerPage" name="resultsPerPage">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-            </select>
-            <button type="submit">Apply</button>
-        }
-    </div>
+	<div class="hero" style="padding: 0px; margin-bottom: 5rem; ">
+		<div class="col-lg-5">
+			<div class="intro-excerpt">
+				<h1>Shop</h1>
+			</div>
+		</div>
+	</div>
 </div>
+		<div style="text-align: center; display: flex; justify-content: center; align-items: center; gap: 10px;">
+			<!-- Begin Form for results per page -->
+			@using (Html.BeginForm("SetResultsPerPage", "Home", FormMethod.Post))
+			{
+				<!-- Create buttons for each option to set results per page -->
+				<input type="hidden" name="resultsPerPage" id="resultsPerPage" value="5" />
+
+				<!-- Button for 5 results per page -->
+				<button type="submit" class="btn btn-primary" onclick="document.getElementById('resultsPerPage').value = '5'">
+					<p style="margin-bottom: 0rem;">5 Results</p>
+				</button>
+
+				<!-- Button for 10 results per page -->
+				<button type="submit" class="btn btn-primary" onclick="document.getElementById('resultsPerPage').value = '10'">
+					<p style="margin-bottom: 0rem;">10 Results</p>
+				</button>
+
+				<!-- Button for 20 results per page -->
+				<button type="submit" class="btn btn-primary" onclick="document.getElementById('resultsPerPage').value = '20'">
+					<p style="margin-bottom: 0rem;">20 Results</p>
+				</button>
+			}
+
+			<!-- Category Filter -->
+			<div style="display: flex; align-items: center;">
+				<label for="category" style="font-weight: 600; color: #000000; font-size: larger; margin-right: 10px;">Category</label>
+				<div class="col" style="height: 2.5rem; border-radius: 25px; width: 8rem; text-align: center; font-size: medium; font-weight: 600; overflow: hidden;">
+					<vc:prod-categories />
+				</div>
+			</div>
+
+			<!-- Color Filter -->
+			<div style="display: flex; align-items: center;">
+				<label for="color" style="font-weight: 600; color: #000000; font-size: larger; margin-right: 10px;">Color</label>
+				<div class="col" style="height: 2.5rem; border-radius: 25px; width: 8rem; text-align: center; font-size: medium; font-weight: 600;">
+					<vc:prod-colors />
+				</div>
+			</div>
+		</div>
+	
+
 
 @if (Model.Products.Count() > 0) {
     @foreach (Product p in Model.Products) {
@@ -44,3 +86,289 @@
 else {
     <h2>No Products Match Your Filtering</h2>
 }
+
+<!-- /*
+* Bootstrap 5
+* Template Name: Furni
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Untree.co">
+	<link rel="shortcut icon" href="favicon.png">
+
+	<meta name="description" content="" />
+	<meta name="keywords" content="bootstrap, bootstrap4" />
+
+	<!-- Bootstrap CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+	<link href="css/tiny-slider.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+	<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+</head>
+<style>
+	/* Modal styles */
+	.modal {
+		display: none;
+		position: fixed;
+		z-index: 9999;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(0,0,0,0.4);
+	}
+
+	.modal-content {
+		background-color: #fefefe;
+		margin: 15% auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 40%;
+	}
+
+	.close {
+		color: #aaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
+
+		.close:hover,
+		.close:focus {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+</style>
+
+<body>
+
+	<!-- The modal -->
+	<div id="myModal" class="modal">
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<div style="text-align: center; margin-bottom: 1rem;">
+				<h2 style="color: black;">Do you want to add<br>this to your cart?</h2>
+			</div>
+			<div style="display: flex; justify-content: center; align-items: center;">
+				<img src="images/Batman.jpg" class="img-fluid product-thumbnail" style="margin-bottom: 1rem; width: 70%;">
+			</div>
+			<div style="text-align: center; margin-bottom: 1rem; color: black;">
+				<h4>Batman Lego Set</h4>
+			</div>
+			<div style="text-align: center;">
+				<button class="btn btn-primary">
+					<p style="margin-bottom: 0rem;">No</p>
+				</button>
+				<button class="btn btn-primary">
+					<p style="margin-bottom: 0rem;">Yes</p>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Button to open the modal -->
+	<!-- <button id="myBtn">Open Modal</button> -->
+	
+	<!-- Start Product Section -->
+
+	<div class="untree_co-section product-section before-footer-section">
+		<div class="container">
+			<div class="row">
+
+				<!-- Start Column 1 -->
+				<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 33.33%">
+					<a class="product-item" style="height: 100%;">
+						<img src="images/Batman.jpg" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
+						<h3 class="product-title">Nordic Chair</h3>
+						<strong class="product-price">$50.00</strong>
+
+						<!-- Add to cart -->
+						<span class="icon-cross" onclick="openModal()">
+							<img src="images/cross.svg" class="img-fluid">
+						</span>
+					</a>
+				</div>
+				<!-- End Column 1 -->
+				<!-- Start Column 1 -->
+				<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 33.33%">
+					<a class="product-item" style="height: 100%;">
+						<img src="images/HarryPotterLego-removebg.png" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
+						<h3 class="product-title">Nordic Chair</h3>
+						<strong class="product-price">$50.00</strong>
+
+						<!-- Add to cart -->
+						<span class="icon-cross" onclick="openModal()">
+							<img src="images/cross.svg" class="img-fluid">
+						</span>
+					</a>
+				</div>
+				<!-- End Column 1 -->
+				<!-- Start Column 1 -->
+				<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 33.33%">
+					<a class="product-item" style="height: 100%;">
+						<img src="images/Ferrari.jpg" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
+						<h3 class="product-title">Nordic Chair</h3>
+						<strong class="product-price">$50.00</strong>
+
+						<!-- Add to cart -->
+						<span class="icon-cross" onclick="openModal()">
+							<img src="images/cross.svg" class="img-fluid">
+						</span>
+					</a>
+				</div>
+				<!-- End Column 1 -->
+				<!-- Start Column 1 -->
+				<div class="col-12 col-md-4 col-lg-3 mb-5">
+					<a class="product-item" style="height: 100%;">
+						<img src="images/product-3.png" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
+						<h3 class="product-title">Nordic Chair</h3>
+						<strong class="product-price">$50.00</strong>
+
+						<!-- Add to cart -->
+						<span class="icon-cross" onclick="openModal()">
+							<img src="images/cross.svg" class="img-fluid">
+						</span>
+					</a>
+				</div>
+				<!-- End Column 1 -->
+				<!-- Start Column 1 -->
+				<div class="col-12 col-md-4 col-lg-3 mb-5">
+					<a class="product-item" style="height: 100%;">
+						<img src="images/product-3.png" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
+						<h3 class="product-title">Nordic Chair</h3>
+						<strong class="product-price">$50.00</strong>
+
+						<!-- Add to cart -->
+						<span class="icon-cross" onclick="openModal()">
+							<img src="images/cross.svg" class="img-fluid">
+						</span>
+					</a>
+				</div>
+				<!-- End Column 1 -->
+
+			</div>
+		</div>
+	</div>
+
+	<!-- End Product Section -->
+	<!-- Start Footer Section -->
+	<footer class="footer-section">
+		<div class="container relative">
+
+			<div class="row g-5 mb-5">
+				<div class="col-lg-4">
+					<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo"><img src="images/AuroraBricksLogo.png" style="width: 20rem;"></a></div>
+
+					<ul class="list-unstyled custom-social">
+						<li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+						<li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+						<li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+						<li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+					</ul>
+				</div>
+
+				<div class="col-lg-8">
+					<div class="row links-wrap">
+						<div class="col-6 col-sm-6 col-md-3">
+							<ul class="list-unstyled">
+								<li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="AboutUs">About us</a></li>
+								<li><a href="#">Services</a></li>
+								<li><a href="#">Contact us</a></li>
+							</ul>
+						</div>
+
+						<div class="col-6 col-sm-6 col-md-3">
+							<ul class="list-unstyled">
+								<li><a href="#">Support</a></li>
+								<li><a href="#">Knowledge base</a></li>
+								<li><a href="#">Live chat</a></li>
+							</ul>
+						</div>
+
+						<div class="col-6 col-sm-6 col-md-3">
+							<ul class="list-unstyled">
+								<li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+									<li>
+										<a class="nav-link" asp-area="" asp-controller="Home"
+										   asp-action="Shop" asp-route-pageNum="1">Shop</a>
+									</li>
+								<li><a href="#">Leadership</a></li>
+								<li><a href="#">Privacy Policy</a></li>
+							</ul>
+						</div>
+
+						
+					</div>
+				</div>
+
+			</div>
+
+			<div class="border-top copyright">
+				<div class="row pt-4">
+					<div class="col-lg-6">
+						<p class="mb-2 text-center text-lg-start">
+							Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a hreff="https://themewagon.com">ThemeWagon</a>  <!-- License information: https://untree.co/license/ -->
+						</p>
+					</div>
+
+					<div class="col-lg-6 text-center text-lg-end">
+						<ul class="list-unstyled d-inline-flex ms-auto">
+							<li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+							<li><a href="#">Privacy Policy</a></li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</footer>
+	<!-- End Footer Section -->
+
+	<script>
+		function openModal() {
+			modal.style.display = "block";
+		}
+
+		function redirectToProduct() {
+			window.location.href = "product_detail.html";
+		}
+
+		// Get the modal
+		var modal = document.getElementById("myModal");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+
+
+	</script>
+
+	<script src="js/bootstrap.bundle.min.js"></script>
+	<script src="js/tiny-slider.js"></script>
+	<script src="js/custom.js"></script>
+</body>
+
+</html>
