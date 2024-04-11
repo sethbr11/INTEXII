@@ -23,6 +23,8 @@ public partial class IntexW24datasetContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public virtual DbSet<Recommendation> Recommendations { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlite("Data Source=IntexW24Dataset.db");
@@ -53,6 +55,22 @@ public partial class IntexW24datasetContext : DbContext
             entity.Property(e => e.ProductId).HasColumnName("product_ID");
             entity.Property(e => e.Qty).HasColumnName("qty");
             entity.Property(e => e.Rating).HasColumnName("rating");
+        });
+
+        modelBuilder.Entity<Recommendation>(entity => {
+            entity.HasKey(e => new { e.CustomerId, e.ProductId });
+
+            entity.Property(e => e.CustomerId)
+                .HasColumnType("INTEGER")
+                .HasColumnName("customer_id");
+            entity.Property(e => e.ProductRecommendation).HasColumnName("prod_recommendation");
+            entity.Property(e => e.ProductId)
+                .HasColumnType("INTEGER")
+                .HasColumnName("product_id");
+            entity.Property(e => e.RankMean)
+                .HasColumnType("NUMERIC")
+                .HasColumnName("rank_mean");
+            entity.Property(e => e.BasedOnLiked).HasColumnName("based_on_liked");
         });
 
         modelBuilder.Entity<Order>(entity =>
