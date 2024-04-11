@@ -4,9 +4,21 @@
 @{
 }
 @model List<Product>
-<h1>Welcome! Review products </h1>
+<div class="hero" style="padding: 0px; margin-bottom: 5rem;">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Welcome! Review products </h1>
+                </div>
+            </div>
+            <div class="col-lg-7">
+            </div>
+        </div>
+    </div>
+</div>
 <div>
-    <a asp-controller="Home" asp-action="AdminAddProduct">Add a product</a>
+    <a class="btn btn-info" asp-controller="Home" asp-action="AdminAddProduct">Add a product</a>
 </div>
 <br />
 <h3>Product Table</h3>
@@ -34,7 +46,7 @@
                 <td>@p.Year</td>
                 <td>@p.NumParts</td>
                 <td>@p.Price</td>
-                <td>@p.ImgLink</td>
+                <td><img src="@p.ImgLink" height="200" width="200" class="img-fluid" /></td>
                 <td>@p.PrimaryColor</td>
                 <td>@p.SecondaryColor</td>
                 <!--<td>p.Description</td>-->
