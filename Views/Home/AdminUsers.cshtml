@@ -1,4 +1,10 @@
-﻿<!-- /*
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!-- /*
 * Bootstrap 5
 * Template Name: Furni
 * Template Author: Untree.co
@@ -42,7 +48,7 @@
 		margin: 15% auto;
 		padding: 20px;
 		border: 1px solid #888;
-		width: 50%;
+		width: 40%;
 	}
 
 	.close {
@@ -69,19 +75,24 @@
 		<div class="modal-content">
 			<span class="close">&times;</span>
 			<div style="text-align: center; margin-bottom: 1rem;">
-				<h2 style="color: black;">Add/Edit Product</h2>
+				<h2 style="color: black;">Do you want to add<br>this to your cart?</h2>
 			</div>
-			<form action="/submit_form" method="post">
-				<!-- Your form content goes here -->
-				<div style="text-align: center;">
-					<button class="btn btn-primary">
-						<p style="margin-bottom: 0rem;">Save</p>
-					</button>
-				</div>
-			</form>
+			<div style="display: flex; justify-content: center; align-items: center;">
+				<img src="images/Batman.jpg" class="img-fluid product-thumbnail" style="margin-bottom: 1rem; width: 70%;">
+			</div>
+			<div style="text-align: center; margin-bottom: 1rem; color: black;">
+				<h4>Batman Lego Set</h4>
+			</div>
+			<div style="text-align: center;">
+				<button class="btn btn-primary">
+					<p style="margin-bottom: 0rem;">No</p>
+				</button>
+				<button class="btn btn-primary">
+					<p style="margin-bottom: 0rem;">Yes</p>
+				</button>
+			</div>
 		</div>
 	</div>
-
 
 	<!-- Button to open the modal -->
 	<!-- <button id="myBtn">Open Modal</button> -->
@@ -121,7 +132,7 @@
 			<div class="row justify-content-between">
 				<div class="col-lg-5">
 					<div class="intro-excerpt">
-						<h1>Admin Products</h1>
+						<h1>Admin Users</h1>
 					</div>
 				</div>
 				<div class="col-lg-7">
@@ -148,19 +159,20 @@
 				<a href="admin_review_orders.html" class="btn btn-primary mybtns">
 					<p style="margin-bottom: 0rem;">Review Orders</p>
 				</a>
-				<button class="btn btn-primary mybtns2" onclick="openModal()">
-					<p style="margin-bottom: 0rem;">Add Product<img src="images/crossblack.svg" class="img-fluid" style="margin-left: 1rem; margin-bottom: .25rem;"></p>
+				<button class="btn btn-primary mybtns2">
+					<p style="margin-bottom: 0rem;">Add User<img src="images/crossblack.svg" class="img-fluid" style="margin-left: 1rem; margin-bottom: .25rem;"></p>
 				</button>
 			</div>
 		</div>
 		<!-- End Admin Toolbox -->
+		<!-- Start Loop -->
 		<div style="width: 100%">
 			<div class="thing1-2">
-				<img src="images/Ahsoka-removebg-preview.png" alt="" class="myimages">
+				<img src="images/LegoHead.png" alt="" class="myimages">
 				<div class="thing3-2">
-					<h1>Item Name</h1>
-					<p style="font-size: medium;">This is the description of the Item</p>
-					<button style="background-color: transparent; border: none;" onclick="openModal()">
+					<h1>Payton Womack</h1>
+					<p style="font-size: medium;">Admin</p>
+					<button style="background-color: transparent; border: none;">
 						<img src="images/pencil.png" alt="" style="height: 2rem;">
 					</button>
 					<button style="background-color: transparent; border: none;">
@@ -170,11 +182,11 @@
 			</div>
 
 			<div class="thing1-2">
-				<img src="images/Ahsoka-removebg-preview.png" alt="" class="myimages">
+				<img src="images/LegoHead.png" alt="" class="myimages">
 				<div class="thing3-2">
-					<h1>Item Name</h1>
-					<p style="font-size: medium;">This is the description of the Item</p>
-					<button style="background-color: transparent; border: none;" onclick="openModal()">
+					<h1>Payton Womack</h1>
+					<p style="font-size: medium;">Customer</p>
+					<button style="background-color: transparent; border: none;">
 						<img src="images/pencil.png" alt="" style="height: 2rem;">
 					</button>
 					<button style="background-color: transparent; border: none;">
@@ -184,11 +196,11 @@
 			</div>
 
 			<div class="thing1-2">
-				<img src="images/Ahsoka-removebg-preview.png" alt="" class="myimages">
+				<img src="images/LegoHead.png" alt="" class="myimages">
 				<div class="thing3-2">
-					<h1>Item Name</h1>
-					<p style="font-size: medium;">This is the description of the Item</p>
-					<button style="background-color: transparent; border: none;" onclick="openModal()">
+					<h1>Payton Womack</h1>
+					<p style="font-size: medium;">Customer</p>
+					<button style="background-color: transparent; border: none;">
 						<img src="images/pencil.png" alt="" style="height: 2rem;">
 					</button>
 					<button style="background-color: transparent; border: none;">
@@ -198,6 +210,7 @@
 			</div>
 		</div>
 
+		<!-- End Loop -->
 
 	</div>
 
