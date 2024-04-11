@@ -38,11 +38,13 @@ builder.Services.AddControllersWithViews();
 
 // MFA Services. See here: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio
 // Google: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-8.0
+/*
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
     googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 });
+*/
 
 // Cookie consent notification. See here: https://learn.microsoft.com/en-us/aspnet/core/security/gdpr?view=aspnetcore-8.0
 builder.Services.Configure<CookiePolicyOptions>(options => {
@@ -88,7 +90,6 @@ builder.Services.AddHsts(options => {
 var app = builder.Build();
 
 // Redirect HTTP to HTTPS. We will have to wait for deployment to try this out
-/*
 app.Use(async (context, next) => {
     // If the request is HTTP, redirect to HTTPS
     if (!context.Request.IsHttps) {
@@ -100,7 +101,6 @@ app.Use(async (context, next) => {
     // Otherwise, continue processing the request
     await next();
 });
-*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
@@ -113,7 +113,7 @@ else {
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseCookiePolicy(); // Also added for cookie notification
@@ -138,6 +138,7 @@ app.Use(async (context, next) => {
     await next();
 });
 
+
 // Default routing
 app.MapControllerRoute(
     name: "default",
@@ -149,7 +150,8 @@ app.MapRazorPages();
 // Route Razor Pages
 app.MapRazorPages();
 
-// Some default account services/scopes
+// Some default account services/scopes (This seems to only work in development
+/*
 using (var scope = app.Services.CreateScope()) {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -164,7 +166,6 @@ using (var scope = app.Services.CreateScope()) {
 }
 
 // Add admins here admin accounts
-/*
 using (var scope = app.Services.CreateScope()) {
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
