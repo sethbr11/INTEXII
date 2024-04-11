@@ -3,18 +3,75 @@
 @using INTEXII.Infrastructure
 @model Product
 
-<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="ProductDetail" 
-                        asp-route-productId="@Model.ProductId" 
-                        asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
-    <div class="card m-1 p-1">
-        <img src="@Model.ImgLink" alt="@Model.Name Image" style="width:300px;" />
-        <h4>@Model.Name</h4>
-        <h3>$@Model.Price</h3>
+<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 33.33%">
+    <a class="product-item" style="height: 100%;" asp-area="" asp-controller="Home" asp-action="ProductDetail"
+       asp-route-productId="@Model.ProductId"
+       asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+        <img src="@Model.ImgLink" alt="@Model.Name Image" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
+        <h3 class="product-title">@Model.Name</h3>
+        <strong class="product-price">$@Model.Price</strong>
 
-        <form id="@Model.ProductId" method="post" asp-page="/Cart">
-            <input type="hidden" asp-for="@Model.ProductId" />
-            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-            <button type="submit" class="btn-outline-success btn-sm float-end">Add to Cart</button>
-        </form>
+        <!-- Add to cart -->
+		<span class="icon-cross" onclick="openModal('@Model.ProductId')">
+            <img src="images/cross.svg" class="img-fluid">
+        </span>
+    </a>
+</div>
+
+<!-- The modal -->
+<div id="myModal-@Model.ProductId" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div style="text-align: center; margin-bottom: 1rem;">
+            <h2 style="color: black;">Do you want to add<br>this to your cart?</h2>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <img src="@Model.ImgLink" class="img-fluid product-thumbnail" style="margin-bottom: 1rem; width: 70%;">
+        </div>
+        <div style="text-align: center; margin-bottom: 1rem; color: black;">
+            <h4>@Model.Name</h4>
+        </div>
+        <div style="text-align: center;">
+            <button class="btn btn-primary">
+                <p style="margin-bottom: 0rem;">No</p>
+            </button>
+            <button class="btn btn-primary">
+                <p style="margin-bottom: 0rem;">Yes</p>
+            </button>
+        </div>
     </div>
-</a>
+</div>
+
+
+<script>
+    function openModal(productId) {
+        var modal = document.getElementById("myModal-" + productId);
+        modal.style.display = "block";
+    }
+
+    function redirectToProduct() {
+        window.location.href = "product_detail.html";
+    }
+
+    // Get all elements with class "close"
+    var closeButtons = document.querySelectorAll(".close");
+
+    // Attach click event handler to each close button
+    closeButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            var modal = button.parentElement.parentElement; // Get the parent modal
+            modal.style.display = "none"; // Close the modal
+        });
+    });
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        var modals = document.querySelectorAll(".modal");
+        modals.forEach(function (modal) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+    }
+</script>
