@@ -1,7 +1,9 @@
 using Humanizer;
 using INTEXII.Data;
 using INTEXII.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.Intrinsics.X86;
 
@@ -18,11 +20,20 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDbContext<IntexW24datasetContext>(options => {
     options.UseSqlite(builder.Configuration["ConnectionStrings:ShoppingConnection"]);
 });
-
 builder.Services.AddScoped<IIntexW24datasetRepository, EFIntexW24datasetRepository>();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+// Adding identities/roles to user accounts
+builder.Services.AddDefaultIdentity<IdentityUser>(
+    options => options.SignIn.RequireConfirmedAccount = true)
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<ApplicationDbContext>();
+// Require users to be authenticated
+builder.Services.AddControllers(config => {
+    var policy = new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build();
+    config.Filters.Add(new AuthorizeFilter(policy));
+});
 builder.Services.AddControllersWithViews();
 
 // MFA Services. See here: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio
@@ -76,6 +87,21 @@ builder.Services.AddHsts(options => {
 
 var app = builder.Build();
 
+// Redirect HTTP to HTTPS. We will have to wait for deployment to try this out
+/*
+app.Use(async (context, next) => {
+    // If the request is HTTP, redirect to HTTPS
+    if (!context.Request.IsHttps) {
+        var httpsUrl = $"https://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}";
+        context.Response.Redirect(httpsUrl);
+        return;
+    }
+
+    // Otherwise, continue processing the request
+    await next();
+});
+*/
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
     app.UseMigrationsEndPoint();
@@ -83,6 +109,7 @@ if (app.Environment.IsDevelopment()) {
 else {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    // https://www.namecheap.com/support/knowledgebase/article.aspx/9711/38/how-to-check-if-hsts-is-enabled/
     app.UseHsts();
 }
 
@@ -97,7 +124,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// CSP Header -- NEEDS TO BE CONFIGURED CORRECTLY
+// CSP Header
 // See here: https://www.stackhawk.com/blog/net-content-security-policy-guide-what-it-is-and-how-to-enable-it/
 app.Use(async (context, next) => {
     context.Response.Headers.Add("Content-Security-Policy",
@@ -121,5 +148,50 @@ app.MapRazorPages();
 
 // Route Razor Pages
 app.MapRazorPages();
+
+// Some default account services/scopes
+using (var scope = app.Services.CreateScope()) {
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    // Seed our roles. Let's just do Admin, everyone else is just a logged in user without a role
+    var roles = new[] { "Admin" };
+    foreach (var role in roles) {
+        // If the role doesn't exist in the system, we can create it
+        if (!await roleManager.RoleExistsAsync(role)) {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+}
+
+// Add admins here admin accounts
+/*
+using (var scope = app.Services.CreateScope()) {
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    // Ensure "Admin" role exists
+    if (await roleManager.FindByNameAsync("Admin") == null) {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+
+    // Our default admin
+    string email = PUT EMAIL HERE
+    string password = PUT PASSWORD HERE (make sure it aligns with password requirements above)
+
+    if (await userManager.FindByEmailAsync(email) == null) {
+        var user = new IdentityUser();
+        user.UserName = email;
+        user.Email = email;
+        user.EmailConfirmed = true;
+
+        var result = await userManager.CreateAsync(user, password);
+
+        if (result.Succeeded) {
+            await userManager.AddToRoleAsync(user, "Admin");
+        }
+    }
+}
+*/
+
 
 app.Run();

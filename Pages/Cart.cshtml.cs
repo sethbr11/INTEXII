@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using INTEXII.Infrastructure;
 using INTEXII.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace INTEXII.Pages
 {
+    [AllowAnonymous]
     public class CartModel : PageModel {
         private IIntexW24datasetRepository _repo;
         public CartModel(IIntexW24datasetRepository temp, Cart cartService) {
