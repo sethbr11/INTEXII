@@ -39,35 +39,24 @@ builder.Services.AddControllers(config => {
 builder.Services.AddControllersWithViews();
 
 // 3PA Services. See here: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio
-if (builder.Environment.IsDevelopment()) {
-    // Google: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-8.0
-    builder.Services.AddAuthentication()
-       .AddGoogle(options => {
-           IConfigurationSection googleAuthNSection =
-           builder.Configuration.GetSection("Authentication:Google");
-           options.ClientId = googleAuthNSection["ClientId"];
-           options.ClientSecret = googleAuthNSection["ClientSecret"];
-       });
-}
+//if (builder.Environment.IsDevelopment()) {
+// Google: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-8.0
+builder.Services.AddAuthentication()
+    .AddGoogle(options => {
+        IConfigurationSection googleAuthNSection =
+        builder.Configuration.GetSection("Authentication:Google");
+        options.ClientId = googleAuthNSection["ClientId"];
+        options.ClientSecret = googleAuthNSection["ClientSecret"];
+    });
+/*}
 else { // If the app is in deployment...
-    /*
-    // Add Azure Key Vault
-    var keyVaultUri = new Uri("https://intex1-14clientid.vault.azure.net/");
-    var credential = new DefaultAzureCredential();
-    var client = new SecretClient(keyVaultUri, credential);
-
-    // Retrieve the secrets from Key Vault
-    var googleClientIdSecret = client.GetSecret("GoogleClientId");
-    var googleClientSecretSecret = client.GetSecret("GoogleClientSecret");
-
     // Add Google authentication with secrets from Key Vault
     builder.Services.AddAuthentication().AddGoogle(googleOptions =>
     {
-        googleOptions.ClientId = googleClientIdSecret.Value.Value;
-        googleOptions.ClientSecret = googleClientSecretSecret.Value.Value;
+        googleOptions.ClientId = 
+        googleOptions.ClientSecret = 
     });
-    */
-}
+}*/
 
 // Cookie consent notification. See here: https://learn.microsoft.com/en-us/aspnet/core/security/gdpr?view=aspnetcore-8.0
 builder.Services.Configure<CookiePolicyOptions>(options => {
@@ -136,7 +125,7 @@ else {
     app.UseHsts();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseCookiePolicy(); // Also added for cookie notification
@@ -145,6 +134,7 @@ app.UseSession(); // Use the session that we set up above
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 // CSP Header
