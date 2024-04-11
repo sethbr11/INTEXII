@@ -1,3 +1,5 @@
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Humanizer;
 using INTEXII.Data;
 using INTEXII.Models;
@@ -36,15 +38,36 @@ builder.Services.AddControllers(config => {
 });
 builder.Services.AddControllersWithViews();
 
-// MFA Services. See here: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio
-// Google: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-8.0
-/*
-builder.Services.AddAuthentication().AddGoogle(googleOptions =>
-{
-    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-});
-*/
+// 3PA Services. See here: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio
+if (builder.Environment.IsDevelopment()) {
+    // Google: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-8.0
+    builder.Services.AddAuthentication()
+       .AddGoogle(options => {
+           IConfigurationSection googleAuthNSection =
+           builder.Configuration.GetSection("Authentication:Google");
+           options.ClientId = googleAuthNSection["ClientId"];
+           options.ClientSecret = googleAuthNSection["ClientSecret"];
+       });
+}
+else { // If the app is in deployment...
+    /*
+    // Add Azure Key Vault
+    var keyVaultUri = new Uri("https://intex1-14clientid.vault.azure.net/");
+    var credential = new DefaultAzureCredential();
+    var client = new SecretClient(keyVaultUri, credential);
+
+    // Retrieve the secrets from Key Vault
+    var googleClientIdSecret = client.GetSecret("GoogleClientId");
+    var googleClientSecretSecret = client.GetSecret("GoogleClientSecret");
+
+    // Add Google authentication with secrets from Key Vault
+    builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = googleClientIdSecret.Value.Value;
+        googleOptions.ClientSecret = googleClientSecretSecret.Value.Value;
+    });
+    */
+}
 
 // Cookie consent notification. See here: https://learn.microsoft.com/en-us/aspnet/core/security/gdpr?view=aspnetcore-8.0
 builder.Services.Configure<CookiePolicyOptions>(options => {
@@ -150,49 +173,51 @@ app.MapRazorPages();
 // Route Razor Pages
 app.MapRazorPages();
 
-// Some default account services/scopes (This seems to only work in development
-/*
-using (var scope = app.Services.CreateScope()) {
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+// Some default account services/scopes (This seems to only work in development)
+if (app.Environment.IsDevelopment()) {
+    using (var scope = app.Services.CreateScope()) {
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    // Seed our roles. Let's just do Admin, everyone else is just a logged in user without a role
-    var roles = new[] { "Admin" };
-    foreach (var role in roles) {
-        // If the role doesn't exist in the system, we can create it
-        if (!await roleManager.RoleExistsAsync(role)) {
-            await roleManager.CreateAsync(new IdentityRole(role));
+        // Seed our roles. Let's just do Admin, everyone else is just a logged in user without a role
+        var roles = new[] { "Admin" };
+        foreach (var role in roles) {
+            // If the role doesn't exist in the system, we can create it
+            if (!await roleManager.RoleExistsAsync(role)) {
+                await roleManager.CreateAsync(new IdentityRole(role));
+            }
         }
     }
-}
 
-// Add admins here admin accounts
-using (var scope = app.Services.CreateScope()) {
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    /*
+    // Add admins here admin accounts
+    using (var scope = app.Services.CreateScope()) {
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    // Ensure "Admin" role exists
-    if (await roleManager.FindByNameAsync("Admin") == null) {
-        await roleManager.CreateAsync(new IdentityRole("Admin"));
-    }
+        // Ensure "Admin" role exists
+        if (await roleManager.FindByNameAsync("Admin") == null) {
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
+        }
 
-    // Our default admin
-    string email = PUT EMAIL HERE
-    string password = PUT PASSWORD HERE (make sure it aligns with password requirements above)
+        // Our default admin
+        string email = PUT EMAIL HERE
+        string password = PUT PASSWORD HERE (make sure it aligns with password requirements above)
 
-    if (await userManager.FindByEmailAsync(email) == null) {
-        var user = new IdentityUser();
-        user.UserName = email;
-        user.Email = email;
-        user.EmailConfirmed = true;
+        if (await userManager.FindByEmailAsync(email) == null) {
+            var user = new IdentityUser();
+            user.UserName = email;
+            user.Email = email;
+            user.EmailConfirmed = true;
 
-        var result = await userManager.CreateAsync(user, password);
+            var result = await userManager.CreateAsync(user, password);
 
-        if (result.Succeeded) {
-            await userManager.AddToRoleAsync(user, "Admin");
+            if (result.Succeeded) {
+                await userManager.AddToRoleAsync(user, "Admin");
+            }
         }
     }
+    */
 }
-*/
 
 
 app.Run();
