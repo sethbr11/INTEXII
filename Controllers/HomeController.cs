@@ -81,5 +81,79 @@ namespace INTEXII.Controllers {
         public IActionResult Error() {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        [AllowAnonymous]
+        public IActionResult AdminReviewProducts()
+        {
+            var data = _repo.Products.ToList();
+            return View(data);
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AdminAddProduct(int? id)
+        {
+            if (id.HasValue)
+            {
+                var product = _repo.Products.SingleOrDefault(x => x.ProductId == id.Value);
+                if (product == null)
+                {
+                    return NotFound(); // Or handle the case when the task is not found
+                }
+                else
+                {
+                    return View(product);
+                }
+            }
+            else
+            {
+                return View(new Product());
+            }
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        // controller for admin to add/edit a product
+        public IActionResult AdminAddProduct(Product r) 
+        {
+            //_repo.AddProduct(response);
+            // return View("AddProductConfirmation");
+            if (r.ProductId == null)
+            {
+                // Add new task
+                _repo.AddProduct(r);
+            }
+            else
+            {
+                // Update existing task
+
+                _repo.UpdateProduct(r);
+            }
+            return View("AddProductConfirmation");
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+
+            var recordToDelete = _repo.Products.SingleOrDefault(x => x.ProductId == id);
+
+            return View(recordToDelete);
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Delete(Product p)
+        {
+
+
+            _repo.DeleteProduct(p);
+            return RedirectToAction("AdminReviewProducts");
+
+        }
+
+        [AllowAnonymous]
+        public IActionResult AdminReviewUsers()
+        {
+            var data = _repo.Customers.ToList();
+            return View(data);
+        }
+
     }
 }
