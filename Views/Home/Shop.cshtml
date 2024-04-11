@@ -72,21 +72,6 @@
 			</div>
 		</div>
 	
-
-
-@if (Model.Products.Count() > 0) {
-    @foreach (Product p in Model.Products) {
-        <partial name="ProductSummary" model="p" />
-    }
-
-    <div page-model="@Model.PaginationInfo" page-action="Shop" page-classes-enabled="true"
-         page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
-         page-url-projectType="@Model.CurrentProdCategory" class="btn-group pull-right m-1"></div>
-}
-else {
-    <h2>No Products Match Your Filtering</h2>
-}
-
 <!-- /*
 * Bootstrap 5
 * Template Name: Furni
@@ -152,30 +137,7 @@ else {
 
 <body>
 
-	<!-- The modal -->
-	<div id="myModal" class="modal">
-		<!-- Modal content -->
-		<div class="modal-content">
-			<span class="close">&times;</span>
-			<div style="text-align: center; margin-bottom: 1rem;">
-				<h2 style="color: black;">Do you want to add<br>this to your cart?</h2>
-			</div>
-			<div style="display: flex; justify-content: center; align-items: center;">
-				<img src="images/Batman.jpg" class="img-fluid product-thumbnail" style="margin-bottom: 1rem; width: 70%;">
-			</div>
-			<div style="text-align: center; margin-bottom: 1rem; color: black;">
-				<h4>Batman Lego Set</h4>
-			</div>
-			<div style="text-align: center;">
-				<button class="btn btn-primary">
-					<p style="margin-bottom: 0rem;">No</p>
-				</button>
-				<button class="btn btn-primary">
-					<p style="margin-bottom: 0rem;">Yes</p>
-				</button>
-			</div>
-		</div>
-	</div>
+
 
 	<!-- Button to open the modal -->
 	<!-- <button id="myBtn">Open Modal</button> -->
@@ -186,76 +148,19 @@ else {
 		<div class="container">
 			<div class="row">
 
-				<!-- Start Column 1 -->
-				<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 33.33%">
-					<a class="product-item" style="height: 100%;">
-						<img src="images/Batman.jpg" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
-						<h3 class="product-title">Nordic Chair</h3>
-						<strong class="product-price">$50.00</strong>
+				@if (Model.Products.Count() > 0) {
+					@foreach (Product p in Model.Products) {
+						<partial name="ProductSummary" model="p" />
+					}
 
-						<!-- Add to cart -->
-						<span class="icon-cross" onclick="openModal()">
-							<img src="images/cross.svg" class="img-fluid">
-						</span>
-					</a>
-				</div>
-				<!-- End Column 1 -->
-				<!-- Start Column 1 -->
-				<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 33.33%">
-					<a class="product-item" style="height: 100%;">
-						<img src="images/HarryPotterLego-removebg.png" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
-						<h3 class="product-title">Nordic Chair</h3>
-						<strong class="product-price">$50.00</strong>
+					<div page-model="@Model.PaginationInfo" page-action="Shop" page-classes-enabled="true"
+						 page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+						 page-url-projectType="@Model.CurrentProdCategory" class="btn-group pull-right m-1"></div>
+				}
+				else {
+					<h2>No Products Match Your Filtering</h2>
+				}
 
-						<!-- Add to cart -->
-						<span class="icon-cross" onclick="openModal()">
-							<img src="images/cross.svg" class="img-fluid">
-						</span>
-					</a>
-				</div>
-				<!-- End Column 1 -->
-				<!-- Start Column 1 -->
-				<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 33.33%">
-					<a class="product-item" style="height: 100%;">
-						<img src="images/Ferrari.jpg" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
-						<h3 class="product-title">Nordic Chair</h3>
-						<strong class="product-price">$50.00</strong>
-
-						<!-- Add to cart -->
-						<span class="icon-cross" onclick="openModal()">
-							<img src="images/cross.svg" class="img-fluid">
-						</span>
-					</a>
-				</div>
-				<!-- End Column 1 -->
-				<!-- Start Column 1 -->
-				<div class="col-12 col-md-4 col-lg-3 mb-5">
-					<a class="product-item" style="height: 100%;">
-						<img src="images/product-3.png" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
-						<h3 class="product-title">Nordic Chair</h3>
-						<strong class="product-price">$50.00</strong>
-
-						<!-- Add to cart -->
-						<span class="icon-cross" onclick="openModal()">
-							<img src="images/cross.svg" class="img-fluid">
-						</span>
-					</a>
-				</div>
-				<!-- End Column 1 -->
-				<!-- Start Column 1 -->
-				<div class="col-12 col-md-4 col-lg-3 mb-5">
-					<a class="product-item" style="height: 100%;">
-						<img src="images/product-3.png" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
-						<h3 class="product-title">Nordic Chair</h3>
-						<strong class="product-price">$50.00</strong>
-
-						<!-- Add to cart -->
-						<span class="icon-cross" onclick="openModal()">
-							<img src="images/cross.svg" class="img-fluid">
-						</span>
-					</a>
-				</div>
-				<!-- End Column 1 -->
 
 			</div>
 		</div>
@@ -335,36 +240,6 @@ else {
 		</div>
 	</footer>
 	<!-- End Footer Section -->
-
-	<script>
-		function openModal() {
-			modal.style.display = "block";
-		}
-
-		function redirectToProduct() {
-			window.location.href = "product_detail.html";
-		}
-
-		// Get the modal
-		var modal = document.getElementById("myModal");
-
-		// Get the <span> element that closes the modal
-		var span = document.getElementsByClassName("close")[0];
-
-		// When the user clicks on <span> (x), close the modal
-		span.onclick = function () {
-			modal.style.display = "none";
-		}
-
-		// When the user clicks anywhere outside of the modal, close it
-		window.onclick = function (event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
-			}
-		}
-
-
-	</script>
 
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="js/tiny-slider.js"></script>
