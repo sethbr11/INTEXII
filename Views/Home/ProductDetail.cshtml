@@ -28,16 +28,16 @@
 						<img src="@Model.Item1.ImgLink" alt="@Model.Item1.Name Image" style="width: inherit;" />
 					</div>
 					<div class="row">
-						<form id="@Model.Item1.ProductId" method="post" asp-page="/Cart">
+						<form id="@Model.Item1.ProductId" method="post" asp-page="/Cart" style="display: flex; flex-direction: column;">
 							<input type="hidden" asp-for="@Model.Item1.ProductId" id="ProductId" name="ProductId" />
 							<input type="hidden" name="returnUrl" value="@Model.Item2" />
-							<button type="submit" class="btn-outline-success btn-sm float-end">Add to Cart</button>
+						<button type="submit" class="btn-outline-success btn-sm float-end btn btn-secondary me-2 btn-white-outline" style="background-color: #f9bf29; font-size: 30px;">Add to Cart</button>
 						</form>
 					</div>
 				</div>
 				<div class="col-6" style="margin-left: 5rem; width: 50%">
-					<h1 style="color: black; font-size: 60px;">@Model.Item1.Name</h1>
-					<h2 style="color: black; font-size: 40px; margin-bottom: 2rem;">@Model.Item1.Price</h2>
+					<h1 style="color: black; font-size: 50px;">@Model.Item1.Name</h1>
+					<h2 style="color: black; font-size: 40px; margin-bottom: 2rem;">$@Model.Item1.Price</h2>
 					<p style="color: black; font-size: 25px; margin-bottom: 2rem;">@Model.Item1.Description</p>
 				</div>
 		</div>
