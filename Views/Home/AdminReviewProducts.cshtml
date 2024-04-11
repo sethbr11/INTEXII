@@ -23,17 +23,6 @@
             <td>Secondary Color</td>
             <!---<td>Description</td>-->
             <td>Category</td>
-            <td>Rec1</td>
-            <td>Sim1</td>
-            <td>Rec2</td>
-            <td>Sim2</td>
-            <td>Rec3</td>
-            <td>Sim3</td>
-            <td>Rec4</td>
-            <td>Sim4</td>
-            <td>Rec5</td>
-            <td>Sim5</td>
-            <td>PopularityRank</td>
         </tr>
     </thead>
     <tbody>
@@ -50,17 +39,6 @@
                 <td>@p.SecondaryColor</td>
                 <!--<td>p.Description</td>-->
                 <td>@p.Category</td>
-                <td>@p.Recommendation1</td>
-                <td>@p.Similarity1</td>
-                <td>@p.Recommendation2</td>
-                <td>@p.Similarity2</td>
-                <td>@p.Recommendation3</td>
-                <td>@p.Similarity3</td>
-                <td>@p.Recommendation4</td>
-                <td>@p.Similarity4</td>
-                <td>@p.Recommendation5</td>
-                <td>@p.Similarity5</td>
-                <td>@p.PopularityRank</td>
 
                 <td><a class="btn btn-info" asp-controller="Home" asp-action="AdminAddProduct" asp-route-id="@p.ProductId">Edit</a></td>
                 <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@p.ProductId">Delete</a></td>
