@@ -4,9 +4,10 @@
 @{
 }
 @model Product
-<!--Form for the admin to add a product to the database-->
+<!--Form for the admin to add/edit a product to the database-->
 <h1>Add a Product</h1>
 <form method="post">
+    <input asp-for="ProductId" hidden />
     <label asp-for="Name">Name of Product: </label>
     <input asp-for="Name"/><br />
     <label asp-for="Year">Year: </label>

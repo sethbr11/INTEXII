@@ -24,15 +24,17 @@ namespace INTEXII.Models
             _repo.Update(product);
             _repo.SaveChanges();
         }
-        public void RemoveProduct(Product product)
-        {
-            _repo.Remove(product);
-            _repo.SaveChanges();
-        }
+        //public void RemoveProduct(Product product)
+        //{
+            //_repo.Remove(product);
+            //_repo.SaveChanges();
+
+        //}
 
         public void DeleteProduct(Product product)
         {
-            throw new NotImplementedException();
+            _repo.Remove(product);
+            _repo.SaveChanges();
         }
 
         public IQueryable<Recommendation> Recommendations => _repo.Recommendations;
