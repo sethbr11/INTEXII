@@ -1,3 +1,5 @@
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Humanizer;
 using INTEXII.Data;
 using INTEXII.Models;
@@ -36,13 +38,25 @@ builder.Services.AddControllers(config => {
 });
 builder.Services.AddControllersWithViews();
 
-// MFA Services. See here: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio
+// 3PA Services. See here: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio
+//if (builder.Environment.IsDevelopment()) {
 // Google: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-8.0
-builder.Services.AddAuthentication().AddGoogle(googleOptions =>
-{
-    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-});
+builder.Services.AddAuthentication()
+    .AddGoogle(options => {
+        IConfigurationSection googleAuthNSection =
+        builder.Configuration.GetSection("Authentication:Google");
+        options.ClientId = googleAuthNSection["ClientId"];
+        options.ClientSecret = googleAuthNSection["ClientSecret"];
+    });
+/*}
+else { // If the app is in deployment...
+    // Add Google authentication with secrets from Key Vault
+    builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = 
+        googleOptions.ClientSecret = 
+    });
+}*/
 
 // Cookie consent notification. See here: https://learn.microsoft.com/en-us/aspnet/core/security/gdpr?view=aspnetcore-8.0
 builder.Services.Configure<CookiePolicyOptions>(options => {
@@ -87,6 +101,19 @@ builder.Services.AddHsts(options => {
 
 var app = builder.Build();
 
+// Redirect HTTP to HTTPS. We will have to wait for deployment to try this out
+app.Use(async (context, next) => {
+    // If the request is HTTP, redirect to HTTPS
+    if (!context.Request.IsHttps) {
+        var httpsUrl = $"https://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}";
+        context.Response.Redirect(httpsUrl);
+        return;
+    }
+
+    // Otherwise, continue processing the request
+    await next();
+});
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
     app.UseMigrationsEndPoint();
@@ -107,9 +134,10 @@ app.UseSession(); // Use the session that we set up above
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-// CSP Header -- NEEDS TO BE CONFIGURED CORRECTLY
+// CSP Header
 // See here: https://www.stackhawk.com/blog/net-content-security-policy-guide-what-it-is-and-how-to-enable-it/
 app.Use(async (context, next) => {
     context.Response.Headers.Add("Content-Security-Policy",
@@ -123,6 +151,7 @@ app.Use(async (context, next) => {
     await next();
 });
 
+
 // Default routing
 app.MapControllerRoute(
     name: "default",
@@ -134,38 +163,51 @@ app.MapRazorPages();
 // Route Razor Pages
 app.MapRazorPages();
 
-// Some default account services/scopes
-using (var scope = app.Services.CreateScope()) {
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+// Some default account services/scopes (This seems to only work in development)
+if (app.Environment.IsDevelopment()) {
+    using (var scope = app.Services.CreateScope()) {
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    // Seed our roles. Let's just do Admin, everyone else is just a logged in user without a role
-    var roles = new[] { "Admin" };
-    foreach (var role in roles) {
-        // If the role doesn't exist in the system, we can create it
-        if (!await roleManager.RoleExistsAsync(role)) {
-            await roleManager.CreateAsync(new IdentityRole(role));
+        // Seed our roles. Let's just do Admin, everyone else is just a logged in user without a role
+        var roles = new[] { "Admin" };
+        foreach (var role in roles) {
+            // If the role doesn't exist in the system, we can create it
+            if (!await roleManager.RoleExistsAsync(role)) {
+                await roleManager.CreateAsync(new IdentityRole(role));
+            }
         }
     }
-}
 
-// Some default admin accounts
-using (var scope = app.Services.CreateScope()) {
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    /*
+    // Add admins here admin accounts
+    using (var scope = app.Services.CreateScope()) {
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    // Our default admin
-    string email = "groupfourteensis@gmail.com";
-    string password = "Group1-14INTEX!isCool";
+        // Ensure "Admin" role exists
+        if (await roleManager.FindByNameAsync("Admin") == null) {
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
+        }
 
-    if (await userManager.FindByEmailAsync(email) == null) {
-        var user = new IdentityUser();
-        user.UserName = email;
-        user.Email = email;
-        user.EmailConfirmed = true;
+        // Our default admin
+        string email = PUT EMAIL HERE
+        string password = PUT PASSWORD HERE (make sure it aligns with password requirements above)
 
-        await userManager.CreateAsync(user, password);
+        if (await userManager.FindByEmailAsync(email) == null) {
+            var user = new IdentityUser();
+            user.UserName = email;
+            user.Email = email;
+            user.EmailConfirmed = true;
 
-        userManager.AddToRoleAsync(user, "Admin");
+            var result = await userManager.CreateAsync(user, password);
+
+            if (result.Succeeded) {
+                await userManager.AddToRoleAsync(user, "Admin");
+            }
+        }
     }
+    */
 }
+
 
 app.Run();
