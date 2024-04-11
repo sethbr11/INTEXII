@@ -32,6 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="IntexMFA.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="IntexW24Dataset.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
