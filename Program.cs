@@ -1,7 +1,9 @@
 using Humanizer;
 using INTEXII.Data;
 using INTEXII.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.Intrinsics.X86;
 
@@ -18,11 +20,20 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDbContext<IntexW24datasetContext>(options => {
     options.UseSqlite(builder.Configuration["ConnectionStrings:ShoppingConnection"]);
 });
-
 builder.Services.AddScoped<IIntexW24datasetRepository, EFIntexW24datasetRepository>();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+// Adding identities/roles to user accounts
+builder.Services.AddDefaultIdentity<IdentityUser>(
+    options => options.SignIn.RequireConfirmedAccount = true)
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<ApplicationDbContext>();
+// Require users to be authenticated
+builder.Services.AddControllers(config => {
+    var policy = new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build();
+    config.Filters.Add(new AuthorizeFilter(policy));
+});
 builder.Services.AddControllersWithViews();
 
 // MFA Services. See here: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio
@@ -122,5 +133,39 @@ app.MapRazorPages();
 
 // Route Razor Pages
 app.MapRazorPages();
+
+// Some default account services/scopes
+using (var scope = app.Services.CreateScope()) {
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    // Seed our roles. Let's just do Admin, everyone else is just a logged in user without a role
+    var roles = new[] { "Admin" };
+    foreach (var role in roles) {
+        // If the role doesn't exist in the system, we can create it
+        if (!await roleManager.RoleExistsAsync(role)) {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+}
+
+// Some default admin accounts
+using (var scope = app.Services.CreateScope()) {
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+    // Our default admin
+    string email = "groupfourteensis@gmail.com";
+    string password = "Group1-14INTEX!isCool";
+
+    if (await userManager.FindByEmailAsync(email) == null) {
+        var user = new IdentityUser();
+        user.UserName = email;
+        user.Email = email;
+        user.EmailConfirmed = true;
+
+        await userManager.CreateAsync(user, password);
+
+        userManager.AddToRoleAsync(user, "Admin");
+    }
+}
 
 app.Run();
