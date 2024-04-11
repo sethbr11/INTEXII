@@ -87,6 +87,21 @@ builder.Services.AddHsts(options => {
 
 var app = builder.Build();
 
+// Redirect HTTP to HTTPS. We will have to wait for deployment to try this out
+/*
+app.Use(async (context, next) => {
+    // If the request is HTTP, redirect to HTTPS
+    if (!context.Request.IsHttps) {
+        var httpsUrl = $"https://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}";
+        context.Response.Redirect(httpsUrl);
+        return;
+    }
+
+    // Otherwise, continue processing the request
+    await next();
+});
+*/
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
     app.UseMigrationsEndPoint();
@@ -109,7 +124,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// CSP Header -- NEEDS TO BE CONFIGURED CORRECTLY
+// CSP Header
 // See here: https://www.stackhawk.com/blog/net-content-security-policy-guide-what-it-is-and-how-to-enable-it/
 app.Use(async (context, next) => {
     context.Response.Headers.Add("Content-Security-Policy",
