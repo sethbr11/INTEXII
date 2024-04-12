@@ -20,8 +20,12 @@
                        asp-action="Shop" asp-route-pageNum="1">Shop</a>
                 </li>
                 <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="AboutUs">About us</a></li>
-                <li><a class="nav-link" href="services.html">Services</a></li>
-                <li><a class="nav-link" href="contact.html">Contact us</a></li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminReviewProducts">Manage Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminReviewUsers">Manage Users</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -31,7 +35,6 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-
             <partial name="_LoginPartial" />
             <div class="navbar-text text-end">
                 <vc:cart-summary />
@@ -42,7 +45,7 @@
 
 <body>
 
-    <div class="m-1 p-1">
+    <div>
         @RenderBody()
     </div>
 </body>

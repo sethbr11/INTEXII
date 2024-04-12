@@ -4,7 +4,7 @@
 }
 
 <!-- Start Hero Section -->
-<div class="hero" style="padding: 0px; margin-bottom: 5rem;">
+<div class="hero" style="padding: 0px;">
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-lg-5">
@@ -17,11 +17,9 @@
         </div>
     </div>
 </div>
-<!-- End Hero Section -->
 
-
-<table class="table table-bordered table-striped">
-        <table class="table">
+<div>
+    <table class="table" style="width: 80%;">
             <tr>
                 <th class="product-thumbnail">Image</th>
                 <th class="product-name">Product</th>
@@ -52,6 +50,7 @@
     }
     </tbody>
 </table>
+</div>
 
 <div class="untree_co-section before-footer-section">
     <div class="container">
@@ -86,7 +85,7 @@
                             </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='checkout.html'">Proceed To Checkout</button>
+                                    <a class="btn btn-black btn-lg py-3 btn-block" asp-controller="Home" asp-action="Checkout">Proceed To Checkout</a>
                             </div>
                         </div>
                     </div>

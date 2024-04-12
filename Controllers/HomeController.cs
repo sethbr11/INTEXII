@@ -23,7 +23,20 @@ namespace INTEXII.Controllers {
         [AllowAnonymous]
         public IActionResult Shop(int pageNum = 1, string prodCategory = null, string prodColor = null) {
 
-            int pageSize = TempData["PageSize"] != null ? (int)TempData["PageSize"] : 5;
+            int pageSize;
+
+            // Try to get the page size from TempData
+            if (TempData["PageSize"] != null)
+            {
+                pageSize = (int)TempData["PageSize"];
+                // Store the page size in session for persistence
+                HttpContext.Session.SetInt32("PageSize", pageSize);
+            }
+            else
+            {
+                // If TempData is empty, check session storage
+                pageSize = HttpContext.Session.GetInt32("PageSize") ?? 5;
+            }
 
 
             var data = new ProductsListViewModel {
@@ -52,10 +65,12 @@ namespace INTEXII.Controllers {
         [HttpPost]
         public IActionResult SetResultsPerPage(int resultsPerPage)
         {
-            TempData["PageSize"] = resultsPerPage;
+            // Store the selected results per page in the session
+            HttpContext.Session.SetInt32("PageSize", resultsPerPage);
+
+            // Redirect to the Shop action or the desired action
             return RedirectToAction("Shop");
         }
-
         [AllowAnonymous]
         public IActionResult ProductDetail(int productId, string returnUrl) {
             try { // Find the product and go to that product's page
@@ -78,6 +93,145 @@ namespace INTEXII.Controllers {
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        [AllowAnonymous]
+        public IActionResult AdminReviewProducts()
+        {
+            var data = _repo.Products.ToList();
+            return View(data);
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AdminAddProduct(int? id)
+        {
+            if (id.HasValue)
+            {
+                var product = _repo.Products.SingleOrDefault(x => x.ProductId == id.Value);
+                if (product == null)
+                {
+                    return NotFound(); // Or handle the case when the task is not found
+                }
+                else
+                {
+                    return View(product);
+                }
+            }
+            else
+            {
+                return View(new Product());
+            }
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        // controller for admin to add/edit a product
+        public IActionResult AdminAddProduct(Product r) 
+        {
+            //_repo.AddProduct(response);
+            // return View("AddProductConfirmation");
+            if (r.ProductId == null)
+            {
+                // Add new task
+                _repo.AddProduct(r);
+            }
+            else
+            {
+                // Update existing task
+
+                _repo.UpdateProduct(r);
+            }
+            return View("AddProductConfirmation");
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+
+            var recordToDelete = _repo.Products.SingleOrDefault(x => x.ProductId == id);
+
+            return View(recordToDelete);
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Delete(Product p)
+        {
+
+
+            _repo.DeleteProduct(p);
+            return RedirectToAction("AdminReviewProducts");
+
+        }
+
+        [AllowAnonymous]
+        public IActionResult AdminReviewUsers()
+        {
+            var data = _repo.Customers.ToList();
+            return View(data);
+        }
+
+		[AllowAnonymous]
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult DeleteUser(int id)
+        {
+
+            //var recordToDelete = _repo.Products.SingleOrDefault(x => x.C == id);
+
+            return View(/*recordToDelete*/);
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult DeleteUser(Customer p)
+        {
+
+
+            //_repo.DeleteProduct(/*p*/);
+            return RedirectToAction("AdminReviewProducts");
+
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AdminEditUser(int? id)
+        {
+            if (id.HasValue)
+            {
+                var product = _repo.Customers.SingleOrDefault(x => x.CustomerId == id.Value);
+                if (product == null)
+                {
+                    return NotFound(); // Or handle the case when the task is not found
+                }
+                else
+                {
+                    return View(product);
+                }
+            }
+            else
+            {
+                return View(new Product());
+            }
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        // controller for admin to add/edit a product
+        public IActionResult AdminEditUser(Customer r)
+        {
+            //_repo.AddProduct(response);
+            // return View("AddProductConfirmation");
+
+            // unblock this code 
+            //if (r.CustomerId == null)
+            //{
+            //    _repo.AddProduct(r);
+            //}
+            //else
+            //{
+            //    _repo.UpdateProduct(r);
+            //}
+            return View("AddEditUser");
         }
     }
 }

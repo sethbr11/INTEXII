@@ -1,0 +1,60 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Product>
+<div class="hero" style="padding: 0px; margin-bottom: 5rem;">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Welcome! Review products </h1>
+                </div>
+            </div>
+            <div class="col-lg-7">
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a class="btn btn-info" asp-controller="Home" asp-action="AdminAddProduct">Add a product</a>
+</div>
+<br />
+<h3>Product Table</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Product ID</td>
+            <td>Name</td>
+            <td>Year</td>
+            <td>Num Parts</td>
+            <td>Price</td>
+            <td>Img Link</td>
+            <td>Primary Color</td>
+            <td>Secondary Color</td>
+            <!---<td>Description</td>-->
+            <td>Category</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.ProductId</td>
+                <td>@p.Name</td>
+                <td>@p.Year</td>
+                <td>@p.NumParts</td>
+                <td>@p.Price</td>
+                <td><img src="@p.ImgLink" height="200" width="200" class="img-fluid" /></td>
+                <td>@p.PrimaryColor</td>
+                <td>@p.SecondaryColor</td>
+                <!--<td>p.Description</td>-->
+                <td>@p.Category</td>
+
+                <td><a class="btn btn-info" asp-controller="Home" asp-action="AdminAddProduct" asp-route-id="@p.ProductId">Edit</a></td>
+                <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@p.ProductId">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+    </table>
