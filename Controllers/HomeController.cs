@@ -74,8 +74,20 @@ namespace INTEXII.Controllers {
         [AllowAnonymous]
         public IActionResult ProductDetail(int productId, string returnUrl) {
             try { // Find the product and go to that product's page
-                var data = _repo.Products.First(x => x.ProductId == productId);
-                return View(Tuple.Create(data, returnUrl));
+                var product = _repo.Products.First(x => x.ProductId == productId);
+
+                var similarProductIds = new List<int?> {
+                        product.Recommendation1,
+                        product.Recommendation2,
+                        product.Recommendation3
+                };
+
+                var similarProducts = _repo.Products
+                    .Where(x => similarProductIds.Contains(x.ProductId))
+                    .OrderByDescending(x => x.PopularityRank)
+                    .ToList();
+
+				return View(Tuple.Create(product, returnUrl, similarProducts));
             }
             // If there was no productId passed or the productId is out of range, go to the Shop IActionResult
             catch (Exception ex) { // We won't do anything with the exception
