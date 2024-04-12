@@ -273,10 +273,23 @@ namespace INTEXII.Controllers {
         [HttpPost]
         public IActionResult AddOrder(Order o) {
             //_repo.AddOrder(o);
-            Predict(PrepareModelInput(o));
-            return RedirectToAction("Index");
+            var prediction = Predict(PrepareModelInput(o));
+            if (prediction == 1 || prediction == 0 )
+            {
+                o.PredFraud = prediction;
+                _repo.AddOrder(o);
+            }
+            else
+            {
+                
+            }
+            return RedirectToAction("OrderConfirmation", new { prediction = prediction });
         }
 
+        public IActionResult OrderConfirmation(int prediction)
+        {
+            return View(prediction);
+        }
         // ONNX MODEL PREDICTING
         private List<int> PrepareModelInput(Order order) {
             int time = (int)order.Time;
@@ -286,7 +299,7 @@ namespace INTEXII.Controllers {
             return new List<int>() { time, amount, country_UK };
         }
 
-        public void Predict(List<int> valuesToPredict) {
+        public int Predict(List<int> valuesToPredict) {
             int time = valuesToPredict[0];
             int amount = valuesToPredict[1];
             int country_of_transaction_United_Kingdom = valuesToPredict[2];
@@ -314,9 +327,12 @@ namespace INTEXII.Controllers {
                         var fraudType = class_type_dict.GetValueOrDefault((int)prediction[0], "Unknown");
                         TempData["Prediction"] = fraudType;
                         Console.WriteLine(TempData["Prediction"] = fraudType);
+                        return (int)prediction[0];
+                        
                     }
                     else {
                         TempData["Prediction"] = "Error: Unable to make a prediction";
+                        return -1;
                     }
                 }
                 // Return the view with the prediction result 
@@ -326,6 +342,7 @@ namespace INTEXII.Controllers {
                 Console.WriteLine("Predication Failed");
                 // Handle exceptions and return error message
                 //return BadRequest($"Error: {ex.Message}");
+                return -1;
             }
         }
     }
