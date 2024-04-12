@@ -3,7 +3,7 @@
 *@
 @{
 }
-@model List<Customer>
+@model List<AspNetUser>
 <!-- Start Hero Section -->
 <div class="hero" style="padding: 0px; margin-bottom: 2rem;">
     <div class="container">
@@ -23,32 +23,19 @@
 <table class="table">
     <thead>
         <tr>
-            <td>CustomerID</td>
-            <td>First Name</td>
-            <td>Last Name</td>
-            <td>Birth Date</td>
-            <td>Country of Residence</td>
-            <td>Gender</td>
-            <td>Age</td>
-            <td>Username</td>
+            <td>UserName</td>
+            
         </tr>
     </thead>
     <tbody>
         @foreach (var c in Model)
         {
             <tr>
-                <td>@c.CustomerId</td>
-                <td>@c.FirstName</td>
-                <td>@c.LastName</td>
-                <td>@c.BirthDate</td>
-                <td>@c.CountryOfResidence</td>
-                <td>@c.Gender</td>
-                <td>@c.Age</td>
-                <td>@c.Username</td>
+                <td>@c.UserName</td>
+               
 
-
-                <td><a class="btn btn-info" asp-controller="Home" asp-action="AdminEditUser" asp-route-id="@c.CustomerId">Edit</a></td>
-                <td><a class="btn btn-danger" asp-controller="Home" asp-action="DeleteUser" asp-route-id="@c.CustomerId">Delete</a></td>
+                <td><a class="btn btn-info" asp-controller="Home" asp-action="AdminEditUser" asp-route-id="@c.UserName">Edit</a></td>
+                <td><a class="btn btn-danger" asp-controller="Home" asp-action="DeleteUser" asp-route-id="@c.UserName">Delete</a></td>
             </tr>
         }
     </tbody>

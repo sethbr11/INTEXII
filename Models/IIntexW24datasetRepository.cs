@@ -9,5 +9,7 @@
         public void UpdateProduct(Product product);
         public void DeleteProduct(Product product);
         public IQueryable<Recommendation> Recommendations { get; }
+        public IQueryable<AspNetUser> AspNetUsers { get; }
+
     }
 }

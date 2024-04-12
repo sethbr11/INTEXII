@@ -176,7 +176,7 @@ namespace INTEXII.Controllers {
         [AllowAnonymous]
         public IActionResult AdminReviewUsers()
         {
-            var data = _repo.Customers.ToList();
+            var data = _repo.AspNetUsers.ToList();
             return View(data);
         }
 
@@ -196,7 +196,7 @@ namespace INTEXII.Controllers {
         }
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult DeleteUser(Customer p)
+        public IActionResult DeleteUser(AspNetUser p)
         {
 
 
@@ -207,29 +207,29 @@ namespace INTEXII.Controllers {
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult AdminEditUser(int? id)
+        public IActionResult AdminEditUser(string? id)
         {
-            if (id.HasValue)
+            if (id.Length>0)
             {
-                var product = _repo.Customers.SingleOrDefault(x => x.CustomerId == id.Value);
+                var product = _repo.AspNetUsers.SingleOrDefault(x => x.UserName == id);
                 if (product == null)
                 {
                     return NotFound(); // Or handle the case when the task is not found
                 }
                 else
                 {
-                    return View(product);
+                    return View(User);
                 }
             }
             else
             {
-                return View(new Product());
+                return View(new AspNetUser());
             }
         }
         [AllowAnonymous]
         [HttpPost]
         // controller for admin to add/edit a product
-        public IActionResult AdminEditUser(Customer r)
+        public IActionResult AdminEditUser(AspNetUser r)
         {
             //_repo.AddProduct(response);
             // return View("AddProductConfirmation");
