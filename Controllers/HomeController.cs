@@ -25,7 +25,20 @@ namespace INTEXII.Controllers {
         [AllowAnonymous]
         public IActionResult Shop(int pageNum = 1, string prodCategory = null, string prodColor = null) {
 
-            int pageSize = TempData["PageSize"] != null ? (int)TempData["PageSize"] : 5;
+            int pageSize;
+
+            // Try to get the page size from TempData
+            if (TempData["PageSize"] != null)
+            {
+                pageSize = (int)TempData["PageSize"];
+                // Store the page size in session for persistence
+                HttpContext.Session.SetInt32("PageSize", pageSize);
+            }
+            else
+            {
+                // If TempData is empty, check session storage
+                pageSize = HttpContext.Session.GetInt32("PageSize") ?? 5;
+            }
 
 
             var data = new ProductsListViewModel {
