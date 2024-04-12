@@ -13,11 +13,11 @@
 					<h2 style="color: black;">Do you want to add<br>this to your cart?</h2>
 				</div>
 				<div style="display: flex; justify-content: center; align-items: center;">
-					<img src="images/Batman.jpg" class="img-fluid product-thumbnail" style="margin-bottom: 1rem; width: 70%;">
+					<img id="modalProductImg" class="img-fluid product-thumbnail" style="margin-bottom: 1rem; width: 70%;">
 				</div>
 				<div style="text-align: center; margin-bottom: 1rem; color: black;">
-					<h4>Batman Lego Set</h4>
-				</div>		
+					<h4 id="modalProductName"></h4>
+				</div>
 				<div style="text-align: center;">
 					<button class="btn btn-primary">
 						<p style="margin-bottom: 0rem;">No</p>
@@ -27,6 +27,7 @@
 					</button>
 				</div>
 			</div>
+
 		</div>
 
 		<!-- Start Hero Section -->
@@ -71,24 +72,25 @@
 					</p>
 					</div> 
 					<!-- End Column 1 -->
+					@foreach (Product p in Model)
+					{
+						<!-- Start Column 1 -->
+						<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 25%">
+							<a class="product-item" style="height: 100%;" asp-area="" asp-controller="Home" asp-action="ProductDetail"
+							   asp-route-productId="@p.ProductId"
+							   asp-route-returnUrl="/Home/Shop">
+								<img src="@p.ImgLink" alt="@p.Name Image" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
+								<h3 class="product-title">@p.Name</h3>
+								<strong class="product-price">$@p.Price</strong>
 
-					@foreach (Product p in Model) {
-					<!-- Start Column 1 -->
-					<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 33.33%">
-						<a class="product-item" style="height: 100%;" asp-area="" asp-controller="Home" asp-action="ProductDetail"
-						   asp-route-productId="@p.ProductId"
-						   asp-route-returnUrl="/Home/Shop">
-							<img src="@p.ImgLink" alt="@p.Name Image" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
-							<h3 class="product-title">@p.Name</h3>
-							<strong class="product-price">$@p.Price</strong>
+								<!-- Add to cart -->
+								<span class="icon-cross" onclick="openModal('@p.ProductId', '@p.Name', '@p.ImgLink')">
+									<img src="images/cross.svg" class="img-fluid">
+								</span>
+							</a>
+						</div>
+					}
 
-							<!-- Add to cart -->
-							<span class="icon-cross" onclick="openModal('@p.ProductId')">
-								<img src="images/cross.svg" class="img-fluid">
-							</span>
-						</a>
-					</div>
-				}
 				</div>
 			</div>
 		</div>
@@ -110,7 +112,6 @@
 										<img src="images/truck.svg" alt="Image" class="imf-fluid">
 									</div>
 									<h3>Fast Shipping</h3>
-									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
 								</div>
 							</div>
 
@@ -120,7 +121,6 @@
 										<img src="images/bag.svg" alt="Image" class="imf-fluid">
 									</div>
 									<h3>Easy to Shop</h3>
-									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
 								</div>
 							</div>
 
@@ -130,7 +130,6 @@
 										<img src="images/support.svg" alt="Image" class="imf-fluid">
 									</div>
 									<h3>24/7 Support</h3>
-									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
 								</div>
 							</div>
 
@@ -140,7 +139,6 @@
 										<img src="images/return.svg" alt="Image" class="imf-fluid">
 									</div>
 									<h3>Hassle Free Returns</h3>
-									<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
 								</div>
 							</div>
 
@@ -212,9 +210,18 @@
 	
 
 		<script>
-			function openModal() {
+			function openModal(productId, productName, productImg) {
+				// Get the modal
+				var modal = document.getElementById("myModal");
+
+				// Set product information in the modal
+				document.getElementById("modalProductName").innerText = productName;
+				document.getElementById("modalProductImg").src = productImg;
+
+				// Display the modal
 				modal.style.display = "block";
 			}
+
 
 			function redirectToProduct() {
 				window.location.href = "product_detail.html";
