@@ -343,9 +343,7 @@ namespace INTEXII.Controllers {
         }
 
         [HttpGet]
-        public IActionResult YourRecommendation() {
-            return View();
-        }
+        public IActionResult YourRecommendation() => View();
 
         [HttpPost]
         public IActionResult YourRecommendation(string username) {
