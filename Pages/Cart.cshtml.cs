@@ -47,10 +47,8 @@ namespace INTEXII.Pages
             return RedirectToPage(new { returnUrl = returnUrl });
         }
 
-        public IActionResult OnPostClearCart() {
+        public void OnPostClearCart() {
             Cart = new Cart();
-
-            return RedirectToPage("/Home/Checkout");
         }
     }
 }

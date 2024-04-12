@@ -198,32 +198,22 @@ namespace INTEXII.Controllers {
             return RedirectToAction("AdminReviewProducts");
 
         }
-
-		[AllowAnonymous]
-        public IActionResult Checkout()
-        {
-            return View();
-        }
-        [AllowAnonymous]
         
-        [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult AddOrder() { return View(); }
+        public IActionResult AddOrder(int cartTotal) {
+            ViewBag.CartTotal = cartTotal;
+            return View(); 
+        }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddOrder(Order o) {
-            //_repo.AddOrder(o);
             var prediction = Predict(PrepareModelInput(o));
             if (prediction == 1 || prediction == 0 )
             {
                 o.PredFraud = prediction;
                 _repo.AddOrder(o);
             }
-            else
-            {
-                
-            }
+
             return RedirectToAction("OrderConfirmation", new { prediction = prediction });
         }
 
