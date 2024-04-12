@@ -157,5 +157,11 @@ namespace INTEXII.Controllers {
             return View(data);
         }
 
-    }
+		[AllowAnonymous]
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
+	}
 }
