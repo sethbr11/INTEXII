@@ -7,16 +7,16 @@
 
 <br /><br />
 @if (Model != null) {
-	<div class="container">
+	<div class="container" class="untree_co-section product-section before-footer-section">
 		<div class="row">
 			@foreach (Product p in Model) {
 				<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 33.33%">
-					<a class="product-item" style="height: 100%;" asp-area="" asp-controller="Home" asp-action="ProductDetail"
+					<a class="product-item" style="height: 100%;" asp-area="" asp-controller="Home" asp-action="ProductDetail" 
 					   asp-route-productId="@p.ProductId"
 					   asp-route-returnUrl="@Model">
 						<img src="@p.ImgLink" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
-						<h3 class="product-title">@p.Name</h3>
-						<strong class="product-price">$@p.Price</strong>
+						<h3 class="product-title text-center font-weight-bold" class="product-title">@p.Name</h3>
+						<h5 class="product-title text-center font-weight-bold" class="product-price">$@p.Price</h5>
 					</a>
 				</div>
 			}
