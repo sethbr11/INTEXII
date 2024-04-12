@@ -341,5 +341,36 @@ namespace INTEXII.Controllers {
             var data = _repo.Orders.ToList();
             return View(data);
         }
+
+        [HttpGet]
+        public IActionResult YourRecommendation() {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult YourRecommendation(string username) {
+            var customerId = _repo.Customers
+                      .Where(x => x.Username == username)
+                      .Select(x => x.CustomerId)
+                      .FirstOrDefault();
+
+            var r = _repo.Recommendations
+                .Where(x => x.CustomerId == customerId)
+                .First();
+
+			var recProdIds = new List<int?> {
+						r.RecProdId1,
+						r.RecProdId2,
+						r.RecProdId3,
+                        r.RecProdId4
+			};
+
+			var recProducts = _repo.Products
+				.Where(x => recProdIds.Contains(x.ProductId))
+				.OrderByDescending(x => x.PopularityRank)
+				.ToList();
+
+			return View(recProducts);
+		}
     }
 }
