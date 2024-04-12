@@ -3,21 +3,83 @@
 
 @model Order
 
+<h2>Checkout</h2>
 <form method="post">
-    <input asp-for="TransactionId" value="1" />
-    <input asp-for="CustomerId" value="1" />
-    <input asp-for="Date" value="1/1/01" />
-    <input asp-for="DayOfWeek" value="Wed" />
-    <input asp-for="Time" value="12" />
-    <input asp-for="EntryMode" value="Tap" />
-    <input asp-for="Amount" value="600" />
-    <input asp-for="TypeOfTransaction" value="Online" />
-    <input asp-for="CountryOfTransaction" value="United States" />
-    <input asp-for="ShippingAddress" value="India" />
-    <input asp-for="Bank" value="Barclays" />
-    <input asp-for="TypeOfCard" value="Visa" />
-    <input asp-for="Fraud" value="0" />
-    <input asp-for="PredFraud" value="0" />
-
+    <input asp-for="TransactionId" value="12" hidden />
+    <input asp-for="CustomerId" hidden />
+    <input asp-for="Date" value="@DateTime.Now" hidden/>
+    <input asp-for="DayOfWeek" value="@DateTime.Today" hidden />-
+    <input asp-for="Time" value="@DateTime.Now.Hour" hidden />
+    <input asp-for="EntryMode" value="Online" hidden/>
+	<br />
+	<label asp-for="Amount"></label>
+	<input asp-for="Amount" />
+	<br />
+    <input asp-for="TypeOfTransaction" value="Online" hidden/>
+	<br />
+	<label asp-for="CountryOfTransaction">Select Your Country: </label>
+    <select asp-for="CountryOfTransaction">
+		<option value="" disabled>- Select a Country -</option>
+		<option value="Australia">Australia</option>
+		<option value="Brazil">Brazil</option>
+		<option value="Canada">Canada</option>
+		<option value="China">China</option>
+		<option value="France">France</option>
+		<option value="Germany">Germany</option>
+		<option value="India">India</option>
+		<option value="Indonesia">Indonesia</option>
+		<option value="Italy">Italy</option>
+		<option value="Japan">Japan</option>
+		<option value="Mexico">Mexico</option>
+		<option value="Netherlands">Netherlands</option>
+		<option value="Russia">Russia</option>
+		<option value="South Korea">South Korea</option>
+		<option value="Spain">Spain</option>
+		<option value="Switzerland">Switzerland</option>
+		<option value="Turkey">Turkey</option>
+		<option value="United Kingdom">United Kingdom</option>
+		<option value="United States">United States</option>
+		<option value="Vietnam">Vietnam</option>
+    </select>
+	<br />
+    <label asp-for="ShippingAddress">Shipping Country: </label>
+	<select asp-for="ShippingAddress">
+		<option value="" disabled>- Select a Country -</option>
+		<option value="Australia">Australia</option>
+		<option value="Brazil">Brazil</option>
+		<option value="Canada">Canada</option>
+		<option value="China">China</option>
+		<option value="France">France</option>
+		<option value="Germany">Germany</option>
+		<option value="India">India</option>
+		<option value="Indonesia">Indonesia</option>
+		<option value="Italy">Italy</option>
+		<option value="Japan">Japan</option>
+		<option value="Mexico">Mexico</option>
+		<option value="Netherlands">Netherlands</option>
+		<option value="Russia">Russia</option>
+		<option value="South Korea">South Korea</option>
+		<option value="Spain">Spain</option>
+		<option value="Switzerland">Switzerland</option>
+		<option value="Turkey">Turkey</option>
+		<option value="United Kingdom">United Kingdom</option>
+		<option value="United States">United States</option>
+		<option value="Vietnam">Vietnam</option>
+	</select>
+	<br />
+    <label asp-for="Bank">Select your Bank: </label>
+	<select asp-for="Bank">
+		<option value="Barclays">Barclays</option>
+		<option value="Bank of America">Bank of America</option>
+	</select>
+	<br />
+	<label asp-for="TypeOfCard">Card Type</label>
+	<select asp-for="TypeOfCard">
+		<option value="Visa">Visa</option>
+		<option value="Master Card">Master Card</option>
+	</select>
+    <input asp-for="Fraud" value="0" hidden />
+    <!--<input asp-for="PredFraud" value="0" hidden />-->
+	<br />
     <button type="submit">Submit!</button>
 </form>
