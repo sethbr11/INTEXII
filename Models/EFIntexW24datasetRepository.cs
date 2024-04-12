@@ -38,6 +38,8 @@ namespace INTEXII.Models
         }
 
         public IQueryable<Recommendation> Recommendations => _repo.Recommendations;
+        public IQueryable<AspNetUser> AspNetUsers => AspNetUsers;
+
 
     }
 }
