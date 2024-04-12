@@ -31,28 +31,28 @@
 		</div>
 
 		<!-- Start Hero Section -->
-			<div class="hero">
-				<div class="container">
-					<div class="row justify-content-between">
-						<div class="col-lg-5">
-							<div class="intro-excerpt">
-								<h1>Look At Our <span clsas="d-block">New Lego Sets</span></h1>
-								<p class="mb-4">We feature new Lego sets every week, come check out our wide variety! </p>
-                                <br><br>
-						<p>
-							<a class="btn btn-secondary me-2" asp-area="" asp-controller="Home"
-							   asp-action="Shop" asp-route-pageNum="1">Explore</a>
-						</p>
-							</div>
+		<div class="hero">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-lg-5">
+						<div class="intro-excerpt">
+							<h1>Look At Our <span clsas="d-block">New Lego Sets</span></h1>
+							<p class="mb-4">We feature new Lego sets every week, come check out our wide variety! </p>
+                            <br><br>
+					<p>
+						<a class="btn btn-secondary me-2" asp-area="" asp-controller="Home"
+							asp-action="Shop" asp-route-pageNum="1">Explore</a>
+					</p>
 						</div>
-						<div class="col-lg-7">
-							<div class="hero-img-wrap">
-								<img src="images/HarryPotterLego-removebg.png" style="width: 35rem;" class="img-fluid">
-							</div>
+					</div>
+					<div class="col-lg-7">
+						<div class="hero-img-wrap">
+							<img src="images/HarryPotterLego-removebg.png" style="width: 35rem;" class="img-fluid">
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 		<!-- End Hero Section -->
 
 		<!-- Start Product Section -->
@@ -60,7 +60,6 @@
 			<div class="container">
 				<div class="row">
 
-					<!-- Start Column 1 -->
 					<div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
 						<h2 class="mb-4 section-title" style="font-size: 50px;">Check Out Our Popular Sets!</h2>
 						<p class="mb-4" style="font-size: 20px; color: black;">Come check out the epic sets we have and build with us! </p>
@@ -71,10 +70,8 @@
 						   asp-action="YourRecommendation" asp-route-pageNum="1" class="btn">Explore YOUR Recommendation!</a>
 					</p>
 					</div> 
-					<!-- End Column 1 -->
 					@foreach (Product p in Model)
 					{
-						<!-- Start Column 1 -->
 						<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 25%">
 							<a class="product-item" style="height: 100%;" asp-area="" asp-controller="Home" asp-action="ProductDetail"
 							   asp-route-productId="@p.ProductId"
