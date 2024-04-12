@@ -132,11 +132,12 @@ app.UseAuthorization();
 // See here: https://www.stackhawk.com/blog/net-content-security-policy-guide-what-it-is-and-how-to-enable-it/
 app.Use(async (context, next) => {
     context.Response.Headers.Add("Content-Security-Policy",
-        "default-src 'self' http://localhost:53172 wss://localhost:44346 ws://localhost:53172/;" +
-		"connect-src 'self' http://localhost:53172 wss://localhost:44346 ws://localhost:53172/ wss://localhost:44311/ http://localhost:58225 ws://localhost:58225;" +
+        "default-src 'self';" + // http://localhost:53172 wss://localhost:44346 ws://localhost:53172/;" +
+		"connect-src 'self';" + // http://localhost:53172 wss://localhost:44346 ws://localhost:53172/ wss://localhost:44311/ http://localhost:58225 ws://localhost:58225;" +
 		"script-src 'self' 'unsafe-inline';" + // TRY NOT TO USE unsafe-inline IF YOU CAN HELP IT!
+		"script-src-elem 'self' https://cdnjs.cloudflare.com;" +
 		"style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; " + // TRY NOT TO USE unsafe-inline IF YOU CAN HELP IT!
-        "font-src 'self'; " +
+		"font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; " +
         "img-src 'self' http://www.w3.org https://m.media-amazon.com/ https://www.lego.com/ https://images.brickset.com/ https://www.brickeconomy.com data:; " +
         //"frame-src 'self';"
         "");
