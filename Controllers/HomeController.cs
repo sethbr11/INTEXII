@@ -175,6 +175,65 @@ namespace INTEXII.Controllers {
         {
             return View();
         }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult DeleteUser(int id)
+        {
 
-	}
+            //var recordToDelete = _repo.Products.SingleOrDefault(x => x.C == id);
+
+            return View(/*recordToDelete*/);
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult DeleteUser(Customer p)
+        {
+
+
+            //_repo.DeleteProduct(/*p*/);
+            return RedirectToAction("AdminReviewProducts");
+
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AdminEditUser(int? id)
+        {
+            if (id.HasValue)
+            {
+                var product = _repo.Customers.SingleOrDefault(x => x.CustomerId == id.Value);
+                if (product == null)
+                {
+                    return NotFound(); // Or handle the case when the task is not found
+                }
+                else
+                {
+                    return View(product);
+                }
+            }
+            else
+            {
+                return View(new Product());
+            }
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        // controller for admin to add/edit a product
+        public IActionResult AdminEditUser(Customer r)
+        {
+            //_repo.AddProduct(response);
+            // return View("AddProductConfirmation");
+
+            // unblock this code 
+            //if (r.CustomerId == null)
+            //{
+            //    _repo.AddProduct(r);
+            //}
+            //else
+            //{
+            //    _repo.UpdateProduct(r);
+            //}
+            return View("AddEditUser");
+        }
+    }
 }

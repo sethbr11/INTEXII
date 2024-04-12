@@ -17,6 +17,8 @@
             </div>
         </div>
     </div>
+
+   
 </div>
 <table class="table">
     <thead>
@@ -43,6 +45,10 @@
                 <td>@c.Gender</td>
                 <td>@c.Age</td>
                 <td>@c.Username</td>
+
+
+                <td><a class="btn btn-info" asp-controller="Home" asp-action="AdminEditUser" asp-route-id="@c.CustomerId">Edit</a></td>
+                <td><a class="btn btn-danger" asp-controller="Home" asp-action="DeleteUser" asp-route-id="@c.CustomerId">Delete</a></td>
             </tr>
         }
     </tbody>
