@@ -131,6 +131,13 @@ namespace INTEXII.Controllers {
             var data = _repo.Products.ToList();
             return View(data);
         }
+
+        [AllowAnonymous]
+        public IActionResult AdminReviewUsers()
+        {
+            var data = _repo.Customers.ToList();
+            return View(data);
+        }
         [AllowAnonymous]
         [HttpGet]
         public IActionResult AdminAddProduct(int? id)
@@ -198,15 +205,7 @@ namespace INTEXII.Controllers {
             return View();
         }
         [AllowAnonymous]
-        [HttpGet]
-        public IActionResult DeleteUser(int id)
-        {
-
-            //var recordToDelete = _repo.Products.SingleOrDefault(x => x.C == id);
-
-            return View(/*recordToDelete*/);
-        }
-
+        
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult AddOrder() { return View(); }
@@ -270,5 +269,64 @@ namespace INTEXII.Controllers {
                 //return BadRequest($"Error: {ex.Message}");
             }
         }
+
+        [HttpGet]
+        public IActionResult DeleteUser(int id)
+        {
+
+            var recordToDelete = _repo.Customers.SingleOrDefault(x => x.CustomerId == id);
+
+            return View(recordToDelete);
+        }
+        [HttpPost]
+        public IActionResult DeleteUser(Customer p)
+        {
+
+
+            // _repo.DeleteCustomer(p);
+            return RedirectToAction("AdminReviewUsers");
+
+        }
+        [HttpGet]
+        public IActionResult AdminEditUser(int? id)
+        {
+            if (id.HasValue)
+            {
+                var customer = _repo.Customers.SingleOrDefault(x => x.CustomerId == id.Value);
+                if (customer == null)
+                {
+                    return NotFound(); // Or handle the case when the task is not found
+                }
+                else
+                {
+                    return View(customer);
+                }
+            }
+            else
+            {
+                return View(new Customer());
+            }
+
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult AdminEditUser(Customer r)
+        {
+            //_repo.AddProduct(response);
+            // return View("AddProductConfirmation");
+            //if (r.CustomerId == null)
+            //{
+            //    // Add new task
+            //    _repo.AddProduct(r);
+            //}
+            //else
+            //{
+            //    // Update existing task
+
+            //    _repo.UpdateProduct(r);
+            //}
+            return View("AddProductConfirmation");
+        }
+
     }
 }
