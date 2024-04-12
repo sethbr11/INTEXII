@@ -345,5 +345,11 @@ namespace INTEXII.Controllers {
             return View("AddProductConfirmation");
         }
 
+        
+        public IActionResult ReviewOrders() 
+        {
+            var data = _repo.Orders.ToList();
+            return View(data);
+        }
     }
 }

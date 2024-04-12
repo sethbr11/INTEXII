@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Order>
+<!--This is for admins to review orders that were marked as fraudulent -->
+<h3>Review Potential Fraudulent Orders</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Transaction ID</td>
+            <td>Date</td>
+            <td>Time</td>
+            <td>Entry Mode</td>
+            <td>Amount</td>
+            <td>Transaction Type</td>
+            <td>Transaction Country</td>
+            <td>Shipping Address</td>
+            <td>Bank</td>
+        </tr>
+    </thead>
+    <tbody>
+        
+        @foreach (var o in Model)
+        {
+            if (o.PredFraud == 1 && o.Fraud == 0)
+            {
+                <tr>
+                <td>@o.TransactionId</td>
+                <td>@o.Date</td>
+                <td>@o.Time</td>
+                <td>@o.EntryMode</td>
+                <td>@o.Amount</td>
+                <td>@o.TypeOfTransaction</td>
+                <td>@o.CountryOfTransaction</td>
+                <td>@o.ShippingAddress</td>
+                <td>@o.Bank</td>
+
+                
+                </tr>
+            }
+
+
+        }
+    </tbody>
+</table>
