@@ -14,12 +14,10 @@ namespace INTEXII.Controllers {
 
         [AllowAnonymous]
         public IActionResult Index() {
-            var data = Tuple.Create(_repo.Customers.ToList(), 
-                                    _repo.LineItems.ToList(),
-                                    _repo.Orders.ToList(),
-                                    _repo.Products.ToList(),
-                                    _repo.Recommendations.ToList());
-            return View(data);
+            // Top 5 products
+            var data = _repo.Products.OrderByDescending(p => p.PopularityRank).Take(5).ToList();
+
+			return View(data);
         }
 
         [AllowAnonymous]

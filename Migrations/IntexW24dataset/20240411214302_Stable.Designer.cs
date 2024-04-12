@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace INTEXII.Migrations.IntexW24dataset
 {
     [DbContext(typeof(IntexW24datasetContext))]
-    [Migration("20240411160615_Stable")]
+    [Migration("20240411214302_Stable")]
     partial class Stable
     {
         /// <inheritdoc />

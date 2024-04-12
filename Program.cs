@@ -20,7 +20,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDbContext<IntexW24datasetContext>(options => {
-    options.UseSqlite(builder.Configuration["ConnectionStrings:ShoppingConnection"]);
+    //options.UseSqlite(builder.Configuration["ConnectionStrings:ShoppingConnection"]);
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:ShoppingAzureConnection"]);
 });
 builder.Services.AddScoped<IIntexW24datasetRepository, EFIntexW24datasetRepository>();
 
@@ -39,7 +40,6 @@ builder.Services.AddControllers(config => {
 builder.Services.AddControllersWithViews();
 
 // 3PA Services. See here: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/?view=aspnetcore-8.0&tabs=visual-studio
-//if (builder.Environment.IsDevelopment()) {
 // Google: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins?view=aspnetcore-8.0
 builder.Services.AddAuthentication()
     .AddGoogle(options => {
@@ -48,15 +48,6 @@ builder.Services.AddAuthentication()
         options.ClientId = googleAuthNSection["ClientId"];
         options.ClientSecret = googleAuthNSection["ClientSecret"];
     });
-/*}
-else { // If the app is in deployment...
-    // Add Google authentication with secrets from Key Vault
-    builder.Services.AddAuthentication().AddGoogle(googleOptions =>
-    {
-        googleOptions.ClientId = 
-        googleOptions.ClientSecret = 
-    });
-}*/
 
 // Cookie consent notification. See here: https://learn.microsoft.com/en-us/aspnet/core/security/gdpr?view=aspnetcore-8.0
 builder.Services.Configure<CookiePolicyOptions>(options => {
@@ -145,7 +136,7 @@ app.Use(async (context, next) => {
         "script-src 'self' 'unsafe-inline';" + // TRY NOT TO USE unsafe-inline IF YOU CAN HELP IT!
         "style-src 'self' 'unsafe-inline'; " + // TRY NOT TO USE unsafe-inline IF YOU CAN HELP IT!
         "font-src 'self'; " +
-        "img-src 'self' http://www.w3.org https://m.media-amazon.com/ https://www.lego.com/ https://images.brickset.com/ data:; " +
+        "img-src 'self' http://www.w3.org https://m.media-amazon.com/ https://www.lego.com/ https://images.brickset.com/ https://www.brickeconomy.com data:; " +
         "frame-src 'self';");
 
     await next();

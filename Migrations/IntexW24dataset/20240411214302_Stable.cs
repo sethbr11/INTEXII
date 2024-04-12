@@ -82,7 +82,7 @@ namespace INTEXII.Migrations.IntexW24dataset
                     secondary_color = table.Column<string>(type: "TEXT", nullable: true),
                     description = table.Column<string>(type: "TEXT", nullable: true),
                     category = table.Column<string>(type: "TEXT", nullable: true),
-                    PublicCategory = table.Column<string>(type: "TEXT", nullable: true),
+                    general_category = table.Column<string>(type: "TEXT", nullable: true),
                     recommendation1 = table.Column<int>(type: "NUMERIC", nullable: true),
                     similarity1 = table.Column<double>(type: "NUMERIC", nullable: true),
                     recommendation2 = table.Column<int>(type: "NUMERIC", nullable: true),
