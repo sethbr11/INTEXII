@@ -74,14 +74,16 @@
 
 					@foreach (Product p in Model) {
 					<!-- Start Column 1 -->
-					<div class="col-12 col-md-4 col-lg-3 mb-5">
-						<a class="product-item" style="height: 100%;">
-							<img src="@p.ImgLink" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
+					<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 33.33%">
+						<a class="product-item" style="height: 100%;" asp-area="" asp-controller="Home" asp-action="ProductDetail"
+						   asp-route-productId="@p.ProductId"
+						   asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+							<img src="@p.ImgLink" alt="@p.Name Image" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
 							<h3 class="product-title">@p.Name</h3>
 							<strong class="product-price">$@p.Price</strong>
 
 							<!-- Add to cart -->
-							<span class="icon-cross" onclick="openModal()">
+							<span class="icon-cross" onclick="openModal('@p.ProductId')">
 								<img src="images/cross.svg" class="img-fluid">
 							</span>
 						</a>
