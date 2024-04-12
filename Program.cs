@@ -136,7 +136,7 @@ app.Use(async (context, next) => {
 		"connect-src 'self' http://localhost:53172 wss://localhost:44346 ws://localhost:53172/ wss://localhost:44311/ http://localhost:58225 ws://localhost:58225;" +
 		"script-src 'self' 'unsafe-inline';" + // TRY NOT TO USE unsafe-inline IF YOU CAN HELP IT!
 		"style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; " + // TRY NOT TO USE unsafe-inline IF YOU CAN HELP IT!
-        //"font-src 'self'; " +
+        "font-src 'self'; " +
         "img-src 'self' http://www.w3.org https://m.media-amazon.com/ https://www.lego.com/ https://images.brickset.com/ https://www.brickeconomy.com data:; " +
         //"frame-src 'self';"
         "");
