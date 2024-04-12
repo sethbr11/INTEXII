@@ -54,10 +54,12 @@ namespace INTEXII.Controllers {
         [HttpPost]
         public IActionResult SetResultsPerPage(int resultsPerPage)
         {
-            TempData["PageSize"] = resultsPerPage;
+            // Store the selected results per page in the session
+            HttpContext.Session.SetInt32("PageSize", resultsPerPage);
+
+            // Redirect to the Shop action or the desired action
             return RedirectToAction("Shop");
         }
-
         [AllowAnonymous]
         public IActionResult ProductDetail(int productId, string returnUrl) {
             try { // Find the product and go to that product's page
