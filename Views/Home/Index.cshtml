@@ -68,51 +68,21 @@
 					</div> 
 					<!-- End Column 1 -->
 
-		      		<!-- Start Column 1 -->
-					  <div class="col-12 col-md-4 col-lg-3 mb-5">
+					@foreach (Product p in Model) {
+					<!-- Start Column 1 -->
+					<div class="col-12 col-md-4 col-lg-3 mb-5">
 						<a class="product-item" style="height: 100%;">
-							<img src="images/Batman.jpg" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
-							<h3 class="product-title">Nordic Chair</h3>
-							<strong class="product-price">$50.00</strong>
+							<img src="@p.ImgLink" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
+							<h3 class="product-title">@p.Name</h3>
+							<strong class="product-price">$@p.Price</strong>
 
-						<!-- Add to cart -->
-                            <span class="icon-cross" onclick="openModal()">
+							<!-- Add to cart -->
+							<span class="icon-cross" onclick="openModal()">
 								<img src="images/cross.svg" class="img-fluid">
 							</span>
 						</a>
-					</div> 
-					<!-- End Column 1 -->
-					
-		      		<!-- Start Column 1 -->
-					  <div class="col-12 col-md-4 col-lg-3 mb-5">
-						<a class="product-item" style="height: 100%;">
-							<img src="images/Batman.jpg" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
-							<h3 class="product-title">Nordic Chair</h3>
-							<strong class="product-price">$50.00</strong>
-
-						<!-- Add to cart -->
-                            <span class="icon-cross" onclick="openModal()">
-								<img src="images/cross.svg" class="img-fluid">
-							</span>
-						</a>
-					</div> 
-					<!-- End Column 1 -->
-				
-		      		<!-- Start Column 1 -->
-					  <div class="col-12 col-md-4 col-lg-3 mb-5">
-						<a class="product-item" style="height: 100%;">
-							<img src="images/Batman.jpg" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
-							<h3 class="product-title">Nordic Chair</h3>
-							<strong class="product-price">$50.00</strong>
-
-						<!-- Add to cart -->
-                            <span class="icon-cross" onclick="openModal()">
-								<img src="images/cross.svg" class="img-fluid">
-							</span>
-						</a>
-					</div> 
-					<!-- End Column 1 -->
-
+					</div>
+				}
 				</div>
 			</div>
 		</div>
@@ -189,9 +159,6 @@
 					<div class="col-md-6">
 						<h2 class="section-title">Proud Parters With</h2>
 					</div>
-					<!-- <div class="col-md-6 text-start text-md-end">
-						<a href="#" class="more">View All Posts</a>
-					</div> -->
 				</div>
 
 				<div class="row">

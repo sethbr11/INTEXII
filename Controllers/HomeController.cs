@@ -15,7 +15,7 @@ namespace INTEXII.Controllers {
         [AllowAnonymous]
         public IActionResult Index() {
             // Top 5 products
-            var data = _repo.Products.OrderByDescending(p => p.PopularityRank).Take(5).ToList();
+            var data = _repo.Products.OrderByDescending(p => p.PopularityRank).Take(3).ToList();
 
 			return View(data);
         }
