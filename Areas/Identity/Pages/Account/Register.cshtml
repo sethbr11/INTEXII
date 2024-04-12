@@ -4,10 +4,25 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<!-- Start Hero Section -->
+<div class="hero" style="padding: 0px;">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Register</h1>
+                </div>
+            </div>
+            <div class="col-lg-7">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hero Section -->
 
+<div class="container" style="margin-top: 2rem;">
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h2>Create a new account.</h2>
             <hr />
@@ -60,6 +75,7 @@
             }
         </section>
     </div>
+</div>
 </div>
 
 @section Scripts {
