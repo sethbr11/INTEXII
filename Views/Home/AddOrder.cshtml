@@ -3,8 +3,15 @@
 
 @model Order
 
-<h2>Checkout</h2>
-<form method="post">
+<div>
+	<div class="container">
+		<div class="intro-excerpt" style="text-align: center;">
+			<h2>Checkout</h2>
+
+		</div>
+	</div>
+</div>
+<form method="post" style="max-width: 600px; margin: 0 auto; padding: 2rem; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <input asp-for="TransactionId" value="12" hidden />
     <input asp-for="CustomerId" hidden />
     <input asp-for="Date" value="@DateTime.Now" hidden/>
@@ -13,14 +20,14 @@
     <input asp-for="EntryMode" value="Online" hidden/>
 	<br />
 	<label asp-for="Amount"></label>
-	<input asp-for="Amount" />
+	<input asp-for="Amount" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px; box-sizing: border-box;" />
 	<br />
     <input asp-for="TypeOfTransaction" value="Online" hidden/>
 	<br />
 	<label asp-for="CountryOfTransaction">Select Your Country: </label>
-    <select asp-for="CountryOfTransaction">
+	<select asp-for="CountryOfTransaction" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px; box-sizing: border-box;">
 		<option value="" disabled>- Select a Country -</option>
-		<option value="Australia">Australia</option>
+		<option value="Australia" >Australia</option>
 		<option value="Brazil">Brazil</option>
 		<option value="Canada">Canada</option>
 		<option value="China">China</option>
@@ -43,7 +50,7 @@
     </select>
 	<br />
     <label asp-for="ShippingAddress">Shipping Country: </label>
-	<select asp-for="ShippingAddress">
+	<select asp-for="ShippingAddress" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px; box-sizing: border-box;">
 		<option value="" disabled>- Select a Country -</option>
 		<option value="Australia">Australia</option>
 		<option value="Brazil">Brazil</option>
@@ -68,18 +75,18 @@
 	</select>
 	<br />
     <label asp-for="Bank">Select your Bank: </label>
-	<select asp-for="Bank">
+	<select asp-for="Bank" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px; box-sizing: border-box;">
 		<option value="Barclays">Barclays</option>
 		<option value="Bank of America">Bank of America</option>
 	</select>
 	<br />
 	<label asp-for="TypeOfCard">Card Type</label>
-	<select asp-for="TypeOfCard">
+	<select asp-for="TypeOfCard" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px; box-sizing: border-box;">
 		<option value="Visa">Visa</option>
 		<option value="Master Card">Master Card</option>
 	</select>
     <input asp-for="Fraud" value="0" hidden />
     <!--<input asp-for="PredFraud" value="0" hidden />-->
 	<br />
-    <button type="submit">Submit!</button>
+	<button type="submit" style="display: block; width: 100%; padding: 0.75rem; border: none; border-radius: 15px; background-color: #007bff; color: white; cursor: pointer;">Submit!</button>
 </form>
