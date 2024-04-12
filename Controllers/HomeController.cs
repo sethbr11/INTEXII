@@ -245,5 +245,14 @@ namespace INTEXII.Controllers {
             //}
             return View("AddEditUser");
         }
+
+        [HttpGet]
+        public IActionResult AddOrder() { return View(); }
+
+        [HttpPost]
+        public IActionResult AddOrder(Order o) {
+            //_repo.AddOrder(o);
+            return RedirectToAction("Index");
+        }
     }
 }

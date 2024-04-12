@@ -12,6 +12,10 @@ namespace INTEXII.Models
         public IQueryable<Customer> Customers => _repo.Customers;
         public IQueryable<LineItem> LineItems => _repo.LineItems;
         public IQueryable<Order> Orders => _repo.Orders;
+        public void AddOrder(Order order) {
+            _repo.Orders.Add(order);
+            _repo.SaveChanges();
+        }
 
         public IQueryable<Product> Products => _repo.Products;
         public void AddProduct(Product product)
