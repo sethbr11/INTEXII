@@ -20,7 +20,7 @@ namespace INTEXII.Controllers {
             _logger = logger;
 
             try {
-                _session = new InferenceSession("./fraud_model2.onnx");
+                _session = new InferenceSession("wwwroot/fraud_model2.onnx");
                 _logger.LogInformation("NNX model loaded successfully.");
                 Console.WriteLine("Success");
             }
@@ -210,6 +210,7 @@ namespace INTEXII.Controllers {
             var prediction = Predict(PrepareModelInput(o));
             if (prediction == 1 || prediction == 0 )
             {
+                o.TransactionId = _repo.Orders.Max(x => (int?)x.TransactionId) + 1 ?? 1; // Our auto-increment
                 o.PredFraud = prediction;
                 _repo.AddOrder(o);
             }

@@ -35,6 +35,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\fraud_model2.onnx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="IntexMFA.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
