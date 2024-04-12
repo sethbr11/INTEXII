@@ -3,6 +3,17 @@
 
 @model IEnumerable<string>
 
+<style>
+    select {
+        height: 2.5rem;
+        border-radius: 25px;
+        width: 8rem;
+        text-align: center;
+        font-size: medium;
+        font-weight: 600
+    }
+</style>
+
 <select onchange="window.location = this.options[this.selectedIndex].value;">
     <option value="">Category</option> @*Default value, nothing happens when you click it*@
     @foreach (string ct in Model ?? Enumerable.Empty<string>()) {
