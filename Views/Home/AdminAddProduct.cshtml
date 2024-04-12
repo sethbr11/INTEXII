@@ -5,34 +5,38 @@
 }
 @model Product
 <!--Form for the admin to add/edit a product to the database-->
-<div class="hero" style="padding: 0px; margin-bottom: 5rem;">
+
+
+<div>
     <div class="container">
-        <div class="row justify-content-between">
-            <div class="col-lg-5">
-                <div class="intro-excerpt">
-                    <h1>Fill out the following fields</h1>
-                </div>
-            </div>
-            <div class="col-lg-7">
-            </div>
+        <div class="intro-excerpt" style="text-align: center;">
+            <h1>
+                Fill out the following fields
+            </h1>
         </div>
     </div>
 </div>
 
-<form method="post">
+<form method="post" style="max-width: 600px; margin: 0 auto; padding: 2rem; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <input asp-for="ProductId" hidden />
+
     <label asp-for="Name">Name of Product: </label>
-    <input asp-for="Name"/><br />
+    <input asp-for="Name" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px; box-sizing: border-box;" /><br />
+
     <label asp-for="Year">Year: </label>
-    <input asp-for="Year"/><br />
+    <input asp-for="Year" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px; box-sizing: border-box;" /><br />
+
     <label asp-for="NumParts">Number of Parts: </label>
-    <input asp-for="NumParts"/><br />
+    <input asp-for="NumParts" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px; box-sizing: border-box;" /><br />
+
     <label asp-for="Price">Price: $</label>
-    <input asp-for="Price"/><br />
+    <input asp-for="Price" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px; box-sizing: border-box;" /><br />
+
     <label asp-for="ImgLink">Image link: </label>
-    <input asp-for="ImgLink"/><br />
+    <input asp-for="ImgLink" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px; box-sizing: border-box;" /><br />
+
     <label asp-for="PrimaryColor">Primary Color: </label>
-    <select asp-for="PrimaryColor">
+    <select asp-for="PrimaryColor" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px;">
         <option value="" disabled selected>- select -</option>
         <option value="Grey">Grey</option>
         <option value="Blue">Blue</option>
@@ -46,8 +50,9 @@
         <option value="Orange">Orange</option>
         <option value="Pink">Pink</option>
     </select><br />
+
     <label asp-for="SecondaryColor">Secondary Color: </label>
-    <select asp-for="SecondaryColor">
+    <select asp-for="SecondaryColor" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px;">
         <option value="" disabled selected>- select -</option>
         <option value="Grey">Grey</option>
         <option value="Blue">Blue</option>
@@ -61,10 +66,12 @@
         <option value="Orange">Orange</option>
         <option value="Pink">Pink</option>
     </select><br />
+
     <label asp-for="Description">Description: </label>
-    <input asp-for="Description" /><br />
+    <input asp-for="Description" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px; box-sizing: border-box;" /><br />
+
     <label asp-for="Category">Category: </label>
-    <select asp-for ="Description">
+    <select asp-for="Category" style="display: block; width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 15px;">
         <option value="" disabled selected>- select -</option>
         <option value="Flight">Flight</option>
         <option value="Harry Potter">Harry Potter</option>
@@ -77,5 +84,6 @@
         <option value="Disney">Disney</option>
         <option value="Other">Other</option>
     </select><br />
-    <button type="submit">Submit</button>
+
+    <button type="submit" style="display: block; width: 100%; padding: 0.75rem; border: none; border-radius: 15px; background-color: #007bff; color: white; cursor: pointer;">Submit</button>
 </form>
