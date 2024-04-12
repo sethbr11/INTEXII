@@ -7,9 +7,9 @@
 }
 
 @if (showBanner) {
-    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
+    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert" style="height: 5rem; color: white; background-color:black; padding-top:1.5rem; text-align:center;">
         Use this space to summarize your privacy and cookie use policy. <a asp-controller="Home" asp-action="Privacy">Learn More</a>.
-        <button type="button" class="accept-policy close" data-bs-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
+        <button type="button" class="accept-policy close" data-bs-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString" style="background-color: #FFD502; color: black; border-radius:25px;">
             <span aria-hidden="true">Accept</span>
         </button>
     </div>
