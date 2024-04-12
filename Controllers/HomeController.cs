@@ -4,13 +4,32 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.ProjectModel;
 using System.Diagnostics;
+using Microsoft.ML;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 namespace INTEXII.Controllers {
     public class HomeController : Controller {
         private IIntexW24datasetRepository _repo;
+        private InferenceSession _session;
+        private readonly ILogger<HomeController> _logger;
 
         // Constructor
-        public HomeController(IIntexW24datasetRepository temp) => _repo = temp;
+        public HomeController(IIntexW24datasetRepository temp, ILogger<HomeController> logger) {
+            _repo = temp;
+            _logger = logger;
+
+            try {
+                _session = new InferenceSession("./fraud_model2.onnx");
+                _logger.LogInformation("NNX model loaded successfully.");
+                Console.WriteLine("Success");
+            }
+            catch (Exception ex) {
+                _logger.LogError($"Error loading the ONNX model: {ex.Message}");
+                Console.WriteLine("Error");
+            }
+
+        }
 
         [AllowAnonymous]
         public IActionResult Index() {
@@ -246,13 +265,68 @@ namespace INTEXII.Controllers {
             return View("AddEditUser");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult AddOrder() { return View(); }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddOrder(Order o) {
             //_repo.AddOrder(o);
+            Predict(PrepareModelInput(o));
             return RedirectToAction("Index");
+        }
+
+        // ONNX MODEL PREDICTING
+        private List<int> PrepareModelInput(Order order) {
+            int time = (int)order.Time;
+            int amount = (int)order.Amount;
+            int country_UK = (int)(order.CountryOfTransaction == "United Kingdom" ? 1 : 0);
+
+            return new List<int>() { time, amount, country_UK };
+        }
+
+        public void Predict(List<int> valuesToPredict) {
+            int time = valuesToPredict[0];
+            int amount = valuesToPredict[1];
+            int country_of_transaction_United_Kingdom = valuesToPredict[2];
+
+            // mapping of class type to readable format
+            var class_type_dict = new Dictionary<int, string>
+            {
+                {0, "Not Fraud" },
+                {1, "Fraud" }
+            };
+            try {
+                // prepare data input for the ONNX model
+                var input = new List<float> { time, amount, country_of_transaction_United_Kingdom };
+                var inputTensor = new DenseTensor<float>(input.ToArray(), new[] { 1, input.Count });
+                var inputs = new List<NamedOnnxValue>
+                {
+                    NamedOnnxValue.CreateFromTensor("float_input", inputTensor)
+                };
+                // Run the model with the input data
+                using (var results = _session.Run(inputs)) {
+                    // Retrieve the prediction result
+                    var prediction = results.FirstOrDefault(item => item.Name == "output_label")?.AsTensor<long>().ToArray();
+                    if (prediction != null && prediction.Length > 0) {
+                        // Map the numerical result to a meaningful string
+                        var fraudType = class_type_dict.GetValueOrDefault((int)prediction[0], "Unknown");
+                        TempData["Prediction"] = fraudType;
+                        Console.WriteLine(TempData["Prediction"] = fraudType);
+                    }
+                    else {
+                        TempData["Prediction"] = "Error: Unable to make a prediction";
+                    }
+                }
+                // Return the view with the prediction result 
+                //return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex) {
+                Console.WriteLine("Predication Failed");
+                // Handle exceptions and return error message
+                //return BadRequest($"Error: {ex.Message}");
+            }
         }
     }
 }
