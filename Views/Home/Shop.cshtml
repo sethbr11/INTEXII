@@ -7,18 +7,21 @@
 
 @model ProductsListViewModel
 
-<br />
-
-
-<div>
+<!-- Start Hero Section -->
+<div class="hero" style="padding: 0px; margin-bottom: 5rem;">
 	<div class="container">
-		<div class="intro-excerpt" style="text-align: center;">
-			<h1> 
-				Shop
-			</h1>
+		<div class="row justify-content-between">
+			<div class="col-lg-5">
+				<div class="intro-excerpt">
+					<h1>Shop</h1>
+				</div>
+			</div>
+			<div class="col-lg-7">
+			</div>
 		</div>
 	</div>
 </div>
+<!-- End Hero Section -->
 		<div style="text-align: center; display: flex; justify-content: center; align-items: center; gap: 10px;">
 			<!-- Begin Form for results per page -->
 			@using (Html.BeginForm("SetResultsPerPage", "Home", FormMethod.Post))
