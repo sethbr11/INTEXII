@@ -25,7 +25,10 @@
         <tr>
             <td>Customer ID</td>
             <td>First Name</td>
-            <td>Last Name</td>          
+            <td>Last Name</td>
+            <td>Gender</td>
+            <td>Country of Residence</td>
+
         </tr>
     </thead>
     <tbody>
@@ -35,7 +38,10 @@
                 <td>@c.CustomerId</td>
                 <td>@c.FirstName</td>
                 <td>@c.LastName</td>
-                
+                <td>@c.Gender</td>
+                <td>@c.CountryOfResidence</td>
+
+
                 <td><a class="btn btn-info" asp-controller="Home" asp-action="AdminEditUser" asp-route-id="@c.CustomerId">Edit</a></td>
                 <td><a class="btn btn-danger" asp-controller="Home" asp-action="DeleteUser" asp-route-id="@c.CustomerId">Delete</a></td>
             </tr>
