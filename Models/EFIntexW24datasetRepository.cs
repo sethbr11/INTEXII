@@ -28,16 +28,27 @@ namespace INTEXII.Models
             _repo.Update(product);
             _repo.SaveChanges();
         }
+
+        public void UpdateCustomer(Customer customer)
+        {
+            _repo.Update(customer);
+            _repo.SaveChanges();
+        }
         //public void RemoveProduct(Product product)
         //{
-            //_repo.Remove(product);
-            //_repo.SaveChanges();
+        //_repo.Remove(product);
+        //_repo.SaveChanges();
 
         //}
 
         public void DeleteProduct(Product product)
         {
             _repo.Remove(product);
+            _repo.SaveChanges();
+        }
+        public void DeleteCustomer(Customer customer)
+        {
+            _repo.Remove(customer);
             _repo.SaveChanges();
         }
 

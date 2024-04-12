@@ -7,7 +7,11 @@
         public IQueryable<Product> Products { get; }
         public void AddProduct(Product product);
         public void UpdateProduct(Product product);
+        public void UpdateCustomer(Customer customer);
+
         public void DeleteProduct(Product product);
+        public void DeleteCustomer(Customer customer);
+
         public IQueryable<Recommendation> Recommendations { get; }
 
     }

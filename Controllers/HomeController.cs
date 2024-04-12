@@ -300,7 +300,7 @@ namespace INTEXII.Controllers {
         {
 
 
-            // _repo.DeleteCustomer(p);
+            _repo.DeleteCustomer(p);
             return RedirectToAction("AdminReviewUsers");
 
         }
@@ -329,19 +329,18 @@ namespace INTEXII.Controllers {
         [HttpPost]
         public IActionResult AdminEditUser(Customer r)
         {
-            //_repo.AddProduct(response);
-            // return View("AddProductConfirmation");
-            //if (r.CustomerId == null)
-            //{
-            //    // Add new task
-            //    _repo.AddProduct(r);
-            //}
-            //else
-            //{
-            //    // Update existing task
+            
+            if (r.CustomerId == null)
+            {
+                // Add new task
+                _repo.UpdateCustomer(r);
+            }
+            else
+            {
+                // Update existing task
 
-            //    _repo.UpdateProduct(r);
-            //}
+                _repo.UpdateCustomer(r);
+            }
             return View("AddProductConfirmation");
         }
 
