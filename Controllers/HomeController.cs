@@ -192,13 +192,6 @@ namespace INTEXII.Controllers {
 
         }
 
-        [AllowAnonymous]
-        public IActionResult AdminReviewUsers()
-        {
-            var data = _repo.AspNetUsers.ToList();
-            return View(data);
-        }
-
 		[AllowAnonymous]
         public IActionResult Checkout()
         {
@@ -212,57 +205,6 @@ namespace INTEXII.Controllers {
             //var recordToDelete = _repo.Products.SingleOrDefault(x => x.C == id);
 
             return View(/*recordToDelete*/);
-        }
-        [AllowAnonymous]
-        [HttpPost]
-        public IActionResult DeleteUser(AspNetUser p)
-        {
-
-
-            //_repo.DeleteProduct(/*p*/);
-            return RedirectToAction("AdminReviewProducts");
-
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        public IActionResult AdminEditUser(string? id)
-        {
-            if (id.Length>0)
-            {
-                var product = _repo.AspNetUsers.SingleOrDefault(x => x.UserName == id);
-                if (product == null)
-                {
-                    return NotFound(); // Or handle the case when the task is not found
-                }
-                else
-                {
-                    return View(User);
-                }
-            }
-            else
-            {
-                return View(new AspNetUser());
-            }
-        }
-        [AllowAnonymous]
-        [HttpPost]
-        // controller for admin to add/edit a product
-        public IActionResult AdminEditUser(AspNetUser r)
-        {
-            //_repo.AddProduct(response);
-            // return View("AddProductConfirmation");
-
-            // unblock this code 
-            //if (r.CustomerId == null)
-            //{
-            //    _repo.AddProduct(r);
-            //}
-            //else
-            //{
-            //    _repo.UpdateProduct(r);
-            //}
-            return View("AddEditUser");
         }
 
         [Authorize(Roles = "Admin")]

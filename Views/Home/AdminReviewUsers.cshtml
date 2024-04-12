@@ -3,7 +3,7 @@
 *@
 @{
 }
-@model List<AspNetUser>
+@*model List<AspNetUser>*@
 <!-- Start Hero Section -->
 <div class="hero" style="padding: 0px; margin-bottom: 2rem;">
     <div class="container">
@@ -28,6 +28,8 @@
         </tr>
     </thead>
     <tbody>
+        <!--
+            @*
         @foreach (var c in Model)
         {
             <tr>
@@ -38,5 +40,7 @@
                 <td><a class="btn btn-danger" asp-controller="Home" asp-action="DeleteUser" asp-route-id="@c.UserName">Delete</a></td>
             </tr>
         }
+        *@
+        -->
     </tbody>
 </table>
