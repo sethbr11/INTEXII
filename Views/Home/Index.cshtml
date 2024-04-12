@@ -77,7 +77,7 @@
 					<div class="col-12 col-md-4 col-lg-3 mb-5" style="width: 33.33%">
 						<a class="product-item" style="height: 100%;" asp-area="" asp-controller="Home" asp-action="ProductDetail"
 						   asp-route-productId="@p.ProductId"
-						   asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+						   asp-route-returnUrl="/Home/Shop">
 							<img src="@p.ImgLink" alt="@p.Name Image" class="img-fluid product-thumbnail" onclick="redirectToProduct()">
 							<h3 class="product-title">@p.Name</h3>
 							<strong class="product-price">$@p.Price</strong>
