@@ -20,8 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDbContext<IntexW24datasetContext>(options => {
-    //options.UseSqlite(builder.Configuration["ConnectionStrings:ShoppingConnection"]);
-    options.UseSqlServer(builder.Configuration["ConnectionStrings:ShoppingAzureConnection"]);
+    options.UseSqlite(builder.Configuration.GetConnectionString("ShoppingConnection"));
 });
 builder.Services.AddScoped<IIntexW24datasetRepository, EFIntexW24datasetRepository>();
 
@@ -93,17 +92,19 @@ builder.Services.AddHsts(options => {
 var app = builder.Build();
 
 // Redirect HTTP to HTTPS. We will have to wait for deployment to try this out
-app.Use(async (context, next) => {
-    // If the request is HTTP, redirect to HTTPS
-    if (!context.Request.IsHttps) {
-        var httpsUrl = $"https://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}";
-        context.Response.Redirect(httpsUrl);
-        return;
-    }
+if (!app.Environment.IsDevelopment()) {
+    app.Use(async (context, next) => {
+        // If the request is HTTP, redirect to HTTPS
+        if (!context.Request.IsHttps) {
+            var httpsUrl = $"https://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}";
+            context.Response.Redirect(httpsUrl);
+            return;
+        }
 
-    // Otherwise, continue processing the request
-    await next();
-});
+        // Otherwise, continue processing the request
+        await next();
+    });
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
@@ -116,7 +117,9 @@ else {
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment()) {
+    app.UseHttpsRedirection();
+}
 app.UseStaticFiles();
 
 app.UseCookiePolicy(); // Also added for cookie notification
@@ -160,7 +163,8 @@ app.MapRazorPages();
 // Some default account services/scopes (This seems to only work in development)
 if (app.Environment.IsDevelopment()) {
     using (var scope = app.Services.CreateScope()) {
-        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        var services = scope.ServiceProvider;
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
         // Seed our roles. Let's just do Admin, everyone else is just a logged in user without a role
         var roles = new[] { "Admin" };
@@ -170,10 +174,13 @@ if (app.Environment.IsDevelopment()) {
                 await roleManager.CreateAsync(new IdentityRole(role));
             }
         }
+
+        // Seed our dataset
+        var datasetContext = services.GetRequiredService<IntexW24datasetContext>();
+        DbSeeder.Seed(datasetContext);
     }
 
-    /*
-    // Add admins here admin accounts
+    // Add default admin and user accounts
     using (var scope = app.Services.CreateScope()) {
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -183,24 +190,33 @@ if (app.Environment.IsDevelopment()) {
             await roleManager.CreateAsync(new IdentityRole("Admin"));
         }
 
-        // Our default admin
-        string email = PUT EMAIL HERE
-        string password = PUT PASSWORD HERE (make sure it aligns with password requirements above)
+        string password = "IntexDemo123456!"; // meets length >= 13, uppercase, lowercase, number, special char
 
-        if (await userManager.FindByEmailAsync(email) == null) {
+        // Seed Admin
+        string adminEmail = "admin@aurorabricks.com";
+        if (await userManager.FindByEmailAsync(adminEmail) == null) {
             var user = new IdentityUser();
-            user.UserName = email;
-            user.Email = email;
+            user.UserName = adminEmail;
+            user.Email = adminEmail;
             user.EmailConfirmed = true;
 
             var result = await userManager.CreateAsync(user, password);
-
             if (result.Succeeded) {
                 await userManager.AddToRoleAsync(user, "Admin");
             }
         }
+
+        // Seed Normal User
+        string userEmail = "user@aurorabricks.com";
+        if (await userManager.FindByEmailAsync(userEmail) == null) {
+            var user = new IdentityUser();
+            user.UserName = userEmail;
+            user.Email = userEmail;
+            user.EmailConfirmed = true;
+
+            await userManager.CreateAsync(user, password);
+        }
     }
-    */
 }
 
 

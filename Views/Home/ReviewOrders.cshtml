@@ -1,47 +1,75 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
 @model List<Order>
-<!--This is for admins to review orders that were marked as fraudulent -->
-<h3>Review Potential Fraudulent Orders</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <td>Transaction ID</td>
-            <td>Date</td>
-            <td>Time</td>
-            <td>Entry Mode</td>
-            <td>Amount</td>
-            <td>Transaction Type</td>
-            <td>Transaction Country</td>
-            <td>Shipping Address</td>
-            <td>Bank</td>
-        </tr>
-    </thead>
-    <tbody>
-        
-        @foreach (var o in Model)
-        {
-            if (o.PredFraud == 1 && o.Fraud == 0)
+@{
+    ViewData["Title"] = "Review Orders | AuroraBricks";
+    var fraudulentOrders = Model.Where(o => o.PredFraud == 1 && o.Fraud == 0).ToList();
+}
+
+<!-- Start Hero Section -->
+<div class="hero" style="padding: 0px; margin-bottom: 5rem;">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Admin Dashboard</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hero Section -->
+
+<div class="bodything">
+    <!-- Start Admin Toolbox -->
+    <div class="thing1">
+        <div class="thing3">
+            <h1>Admin Toolbox</h1>
+        </div>
+        <div class="thing2">
+            <a asp-controller="Home" asp-action="AdminReviewProducts" class="btn btn-primary mybtns w-100">
+                <p style="margin-bottom: 0rem;">Manage Products</p>
+            </a>
+            <a asp-controller="Home" asp-action="AdminReviewUsers" class="btn btn-primary mybtns w-100">
+                <p style="margin-bottom: 0rem;">Manage Users</p>
+            </a>
+            <a asp-controller="Home" asp-action="ReviewOrders" class="btn btn-primary mybtns w-100">
+                <p style="margin-bottom: 0rem;">Review Orders</p>
+            </a>
+        </div>
+    </div>
+    <!-- End Admin Toolbox -->
+
+    <!-- Dynamic Fraudulent Orders List -->
+    <div style="width: 100%;">
+        <div class="ps-md-4">
+            <h2 class="mb-4 font-weight-bold" style="color: black;">Review Potential Fraudulent Orders (@fraudulentOrders.Count flagged)</h2>
+            
+            @if (fraudulentOrders.Count == 0)
             {
-                <tr>
-                <td>@o.TransactionId</td>
-                <td>@o.Date</td>
-                <td>@o.Time</td>
-                <td>@o.EntryMode</td>
-                <td>@o.Amount</td>
-                <td>@o.TypeOfTransaction</td>
-                <td>@o.CountryOfTransaction</td>
-                <td>@o.ShippingAddress</td>
-                <td>@o.Bank</td>
-
-                
-                </tr>
+                <div class="alert alert-success">No potential fraudulent orders found to review.</div>
             }
-
-
-        }
-    </tbody>
-</table>
+            else
+            {
+                @foreach (var o in fraudulentOrders)
+                {
+                    <div class="thing1-2 mb-4 p-3 d-flex align-items-center" style="background-color: #fff3cd; border-radius: 12px; border: 1px solid #ffeeba;">
+                        <i class="fa-solid fa-triangle-exclamation fa-3x me-4 text-warning"></i>
+                        <div class="thing3-2 flex-grow-1">
+                            <h3 style="color: #856404; margin-bottom: 0.5rem;" class="font-weight-bold">Transaction ID: #@o.TransactionId</h3>
+                            <p style="font-size: 0.95rem; color: #555; margin-bottom: 0.5rem;">
+                                Shipping Address: <span class="font-weight-bold">@o.ShippingAddress</span> | Bank: <span class="font-weight-bold">@o.Bank</span>
+                            </p>
+                            <p style="font-size: 0.9rem; margin-bottom: 0rem; font-weight: 600; color: #222;">
+                                Amount: <span style="color: #c0392b; font-size: 1.1rem; font-weight: 700;">$@o.Amount</span> | 
+                                Country: @o.CountryOfTransaction | 
+                                Card: @o.TypeOfCard | 
+                                Date: @o.Date | 
+                                Time: @o.Time:00 | 
+                                Entry Mode: @o.EntryMode
+                            </p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

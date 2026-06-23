@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,8 +27,12 @@ public partial class IntexW24datasetContext : DbContext
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=tcp:myfreesqldbserverbrock.database.windows.net,1433;Initial Catalog=SethTestDb;Persist Security Info=False;User ID=sethab;Password=REMOVED_SECRET;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlite("Data Source=IntexW24Dataset.db");
+        }
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Customer>(entity =>
@@ -81,16 +85,16 @@ public partial class IntexW24datasetContext : DbContext
                 .HasColumnName("customer_id");
             entity.Property(e => e.RecProdId1)
                 .HasColumnType("TINYINT")
-                .HasColumnName("rec_product_id_1");
+                .HasColumnName("rec_prod_id_1");
             entity.Property(e => e.RecProdId2)
                 .HasColumnType("TINYINT")
-                .HasColumnName("rec_product_id_2");
+                .HasColumnName("rec_prod_id_2");
             entity.Property(e => e.RecProdId3)
                 .HasColumnType("TINYINT")
-                .HasColumnName("rec_product_id_3");
+                .HasColumnName("rec_prod_id_3");
             entity.Property(e => e.RecProdId4)
                 .HasColumnType("TINYINT")
-                .HasColumnName("rec_product_id_4");
+                .HasColumnName("rec_prod_id_4");
         });
 
         modelBuilder.Entity<Order>(entity =>

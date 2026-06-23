@@ -1,50 +1,81 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
 @model List<Customer>
-
+@{
+    ViewData["Title"] = "Manage Users | AuroraBricks";
+}
 
 <!-- Start Hero Section -->
-<div class="hero" style="padding: 0px; margin-bottom: 2rem;">
+<div class="hero" style="padding: 0px; margin-bottom: 5rem;">
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-lg-5">
                 <div class="intro-excerpt">
-                    <h1>Manage Users</h1>
+                    <h1>Admin Dashboard</h1>
                 </div>
-            </div>
-            <div class="col-lg-7">
             </div>
         </div>
     </div>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <td>Customer ID</td>
-            <td>First Name</td>
-            <td>Last Name</td>
-            <td>Gender</td>
-            <td>Country of Residence</td>
+<!-- End Hero Section -->
 
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var c in Model.Take(100))
-        {
-            <tr>
-                <td>@c.CustomerId</td>
-                <td>@c.FirstName</td>
-                <td>@c.LastName</td>
-                <td>@c.Gender</td>
-                <td>@c.CountryOfResidence</td>
+<div class="bodything">
+    <!-- Start Admin Toolbox -->
+    <div class="thing1">
+        <div class="thing3">
+            <h1>Admin Toolbox</h1>
+        </div>
+        <div class="thing2">
+            <a asp-controller="Home" asp-action="AdminReviewProducts" class="btn btn-primary mybtns w-100">
+                <p style="margin-bottom: 0rem;">Manage Products</p>
+            </a>
+            <a asp-controller="Home" asp-action="AdminReviewUsers" class="btn btn-primary mybtns w-100">
+                <p style="margin-bottom: 0rem;">Manage Users</p>
+            </a>
+            <a asp-controller="Home" asp-action="ReviewOrders" class="btn btn-primary mybtns w-100">
+                <p style="margin-bottom: 0rem;">Review Orders</p>
+            </a>
+            <a asp-controller="Home" asp-action="AdminEditUser" class="btn btn-primary mybtns2 w-100 d-flex align-items-center justify-content-center text-center">
+                <p style="margin-bottom: 0rem; font-size: 1.25rem;">Add User <i class="fa-solid fa-plus ms-2"></i></p>
+            </a>
+        </div>
+    </div>
+    <!-- End Admin Toolbox -->
 
-
-                <td><a class="btn btn-info" asp-controller="Home" asp-action="AdminEditUser" asp-route-id="@c.CustomerId">Edit</a></td>
-                <td><a class="btn btn-danger" asp-controller="Home" asp-action="DeleteUser" asp-route-id="@c.CustomerId">Delete</a></td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <!-- Dynamic User List -->
+    <div style="width: 100%;">
+        <div class="ps-md-4">
+            <h2 class="mb-4 font-weight-bold" style="color: black;">User Accounts (@Model.Count items)</h2>
+            
+            @if (Model.Count == 0)
+            {
+                <div class="alert alert-info">No users found in the database.</div>
+            }
+            else
+            {
+                @foreach (var c in Model.Take(100))
+                {
+                    <div class="thing1-2 mb-4 p-3 d-flex align-items-center" style="background-color: #f9f9f9; border-radius: 12px; border: 1px solid #eee;">
+                        <img src="~/images/user.svg" alt="User Avatar" class="myimages" style="max-height: 80px; max-width: 80px; filter: invert(0.4); margin-right: 2rem;">
+                        <div class="thing3-2 flex-grow-1">
+                            <h3 style="color: black; margin-bottom: 0.5rem;" class="font-weight-bold">@c.FirstName @c.LastName</h3>
+                            <p style="font-size: 0.95rem; color: #555; margin-bottom: 0.5rem;">Username: <span class="font-weight-bold" style="color: #2b7a78;">@c.Username</span></p>
+                            <p style="font-size: 0.9rem; margin-bottom: 0rem; font-weight: 600; color: #222;">
+                                Customer ID: @c.CustomerId | 
+                                Gender: @c.Gender | 
+                                Residence: @c.CountryOfResidence | 
+                                Age: @c.Age
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center ms-3">
+                            <a asp-controller="Home" asp-action="AdminEditUser" asp-route-id="@c.CustomerId" class="btn btn-link p-2" title="Edit User">
+                                <i class="fa-solid fa-pen-to-square fa-2x" style="color: #0d6efd;"></i>
+                            </a>
+                            <a asp-controller="Home" asp-action="DeleteUser" asp-route-id="@c.CustomerId" class="btn btn-link p-2 ms-2" title="Delete User">
+                                <i class="fa-solid fa-trash fa-2x" style="color: #dc3545;"></i>
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
