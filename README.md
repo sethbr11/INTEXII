@@ -1,8 +1,8 @@
 # AuroraBricks (BYU IS INTEX II Project)
 
-This repository contains a past group project for the BYU Information Systems (IS) program. 
+This repository contains a past group project for the BYU Information Systems (IS) program. The project has since been cleaned up, so the state it's in now is not the exact state it was in when it was running, but it's pretty close.
 
-## 🌿 Branches
+## Branches
 
 This repository is split into two primary branches:
 
@@ -15,7 +15,7 @@ This repository is split into two primary branches:
 
 ---
 
-## 🚀 How to Run the Demo
+## How to Run the Demo
 
 To run a fully working local version of the e-commerce store and dashboards, check out the **`working-demo`** branch and follow its detailed setup instructions:
 
